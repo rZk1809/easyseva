@@ -3,12 +3,13 @@
 import React, { useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { services } from '@/lib/mockData';
+import { services, serviceCategories } from '@/lib/mockData';
 import { useApp } from '@/context/AppContext';
 import { PageLayout, PageHeader } from '@/components/layout/PageLayout';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Alert } from '@/components/ui/Alert';
+import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { cn } from '@/lib/utils';
 import {
   Clock,
@@ -19,6 +20,11 @@ import {
   ArrowRight,
   IndianRupee,
   List,
+  CalendarDays,
+  Building2,
+  Phone,
+  Award,
+  HelpCircle,
 } from 'lucide-react';
 
 export default function ServiceDetailPage() {
@@ -39,9 +45,21 @@ export default function ServiceDetailPage() {
   const title = language === 'ta' ? service.titleTa : language === 'hi' ? service.titleHi : service.title;
   const shortDesc = language === 'ta' ? service.shortDescriptionTa : language === 'hi' ? service.shortDescriptionHi : service.shortDescription;
   const docsToShow = showAllDocs ? service.documents : service.documents.slice(0, 2);
+  const category = serviceCategories.find(c => c.id === service.categoryId);
+  const categoryTitle = category
+    ? (language === 'ta' ? category.titleTa : language === 'hi' ? category.titleHi : category.title)
+    : 'Services';
 
   return (
     <PageLayout maxWidth="lg">
+      <Breadcrumbs
+        items={[
+          { label: 'Home', href: '/home' },
+          { label: 'Services', href: '/services' },
+          { label: categoryTitle, href: `/services/${service.categoryId}` },
+          { label: title },
+        ]}
+      />
       <PageHeader
         title={title}
         description={shortDesc}
@@ -55,6 +73,16 @@ export default function ServiceDetailPage() {
           <Card>
             <h2 className="text-base font-bold text-slate-900 mb-2">What is this service?</h2>
             <p className="text-slate-600 leading-relaxed">{service.fullDescription}</p>
+
+            {service.whatYouGet && (
+              <div className="mt-4 flex items-start gap-3 bg-teal-50 border border-teal-200 rounded-xl p-3">
+                <Award size={18} className="text-teal-700 shrink-0 mt-0.5" aria-hidden="true" />
+                <div>
+                  <p className="text-xs font-semibold text-teal-800 uppercase tracking-wide">What you&apos;ll get</p>
+                  <p className="text-sm text-teal-900 mt-0.5 leading-relaxed">{service.whatYouGet}</p>
+                </div>
+              </div>
+            )}
 
             {service.usedFor.length > 0 && (
               <div className="mt-4">
@@ -141,6 +169,51 @@ export default function ServiceDetailPage() {
               </li>
             </ol>
           </Card>
+
+          {/* FAQs */}
+          {service.faqs && service.faqs.length > 0 && (
+            <Card>
+              <div className="flex items-center gap-2 mb-3">
+                <HelpCircle size={18} className="text-gov-600" aria-hidden="true" />
+                <h2 className="text-base font-bold text-slate-900">Frequently asked questions</h2>
+              </div>
+              <div className="divide-y divide-slate-100">
+                {service.faqs.map((faq, i) => (
+                  <details key={i} className="group py-2">
+                    <summary className="flex items-center justify-between gap-3 cursor-pointer list-none py-1.5 text-sm font-semibold text-slate-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-gov-600 rounded">
+                      {faq.question}
+                      <ChevronDown size={16} className="text-slate-400 shrink-0 transition-transform group-open:rotate-180" aria-hidden="true" />
+                    </summary>
+                    <p className="text-sm text-slate-600 leading-relaxed pt-1 pb-2">{faq.answer}</p>
+                  </details>
+                ))}
+              </div>
+            </Card>
+          )}
+
+          {/* Related services */}
+          {service.relatedServiceIds && service.relatedServiceIds.length > 0 && (
+            <Card>
+              <h2 className="text-base font-bold text-slate-900 mb-3">Related services</h2>
+              <div className="space-y-2">
+                {service.relatedServiceIds
+                  .map(id => services.find(s => s.id === id))
+                  .filter((s): s is NonNullable<typeof s> => Boolean(s))
+                  .map(rel => (
+                    <Link
+                      key={rel.id}
+                      href={`/services/${rel.categoryId}/${rel.id}`}
+                      className="flex items-center justify-between gap-3 p-3 rounded-lg border border-slate-200 hover:border-gov-300 hover:bg-gov-50/50 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gov-600"
+                    >
+                      <span className="text-sm font-semibold text-slate-800">
+                        {language === 'ta' ? rel.titleTa : language === 'hi' ? rel.titleHi : rel.title}
+                      </span>
+                      <ArrowRight size={16} className="text-gov-600 shrink-0" aria-hidden="true" />
+                    </Link>
+                  ))}
+              </div>
+            </Card>
+          )}
         </div>
 
         {/* Sidebar */}
@@ -170,6 +243,33 @@ export default function ServiceDetailPage() {
                   <p className="text-sm font-semibold">{service.fee}</p>
                 </div>
               </div>
+              {service.processingTime && (
+                <div className="flex items-center gap-3">
+                  <CalendarDays size={18} className="text-teal-300 shrink-0" aria-hidden="true" />
+                  <div>
+                    <p className="text-xs text-white/60">Processing time</p>
+                    <p className="text-sm font-semibold">{service.processingTime}</p>
+                  </div>
+                </div>
+              )}
+              {service.department && (
+                <div className="flex items-start gap-3">
+                  <Building2 size={18} className="text-teal-300 shrink-0 mt-0.5" aria-hidden="true" />
+                  <div>
+                    <p className="text-xs text-white/60">Issued by</p>
+                    <p className="text-sm font-semibold leading-snug">{service.department}</p>
+                  </div>
+                </div>
+              )}
+              {service.helpline && (
+                <div className="flex items-start gap-3">
+                  <Phone size={18} className="text-teal-300 shrink-0 mt-0.5" aria-hidden="true" />
+                  <div>
+                    <p className="text-xs text-white/60">Helpline</p>
+                    <p className="text-sm font-semibold leading-snug">{service.helpline}</p>
+                  </div>
+                </div>
+              )}
             </div>
           </Card>
 
