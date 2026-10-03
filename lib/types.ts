@@ -37,6 +37,11 @@ export interface DocumentRequirement {
   examples: string[];
 }
 
+export interface ServiceFaq {
+  question: string;
+  answer: string;
+}
+
 export interface Service {
   id: string;
   categoryId: string;
@@ -54,6 +59,18 @@ export interface Service {
   fee: string;
   formSteps: FormStep[];
   tags: string[];
+  /** Typical government processing time, e.g. "7–15 working days". */
+  processingTime?: string;
+  /** Issuing authority / department. */
+  department?: string;
+  /** Public helpline number for this service. */
+  helpline?: string;
+  /** Plain-language description of the outcome the applicant receives. */
+  whatYouGet?: string;
+  /** Service-specific frequently asked questions. */
+  faqs?: ServiceFaq[];
+  /** IDs of related services to suggest. */
+  relatedServiceIds?: string[];
 }
 
 export interface EligibilityQuestion {
