@@ -3,8 +3,11 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  // Direct (unpooled) connection used for migrations. Falls back to DATABASE_URL
+  // locally where only a single connection string is configured.
+  directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
 model User {
