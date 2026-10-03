@@ -12,6 +12,7 @@ interface CardProps {
   role?: string;
   tabIndex?: number;
   'aria-label'?: string;
+  'aria-live'?: 'off' | 'polite' | 'assertive';
 }
 
 const paddingClasses = {

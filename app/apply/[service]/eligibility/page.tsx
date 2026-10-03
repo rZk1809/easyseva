@@ -78,7 +78,7 @@ export default function EligibilityPage() {
           backHref={`/services/${service.categoryId}/${service.id}`}
           backLabel={`Back to ${title}`}
         />
-        <Card shadow="md" className="text-center py-8">
+        <Card shadow="md" className="text-center py-8" role="status" aria-live="polite">
           {overallEligible ? (
             <>
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
