@@ -52,3 +52,10 @@ next-env.d.ts
 .agents/
 .claude/
 skills-lock.json
+
+# LaTeX build artifacts
+docs/report/*.aux
+docs/report/*.log
+docs/report/*.out
+docs/report/*.toc
+docs/report/pass*.log
