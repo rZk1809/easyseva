@@ -73,14 +73,14 @@ export default function ServiceDetailPage() {
           {/* What is it */}
           <Card>
             <h2 className="text-base font-bold text-slate-900 mb-2">{trx('What is this service?', language)}</h2>
-            <p className="text-slate-600 leading-relaxed">{service.fullDescription}</p>
+            <p className="text-slate-600 leading-relaxed">{trx(service.fullDescription, language)}</p>
 
             {service.whatYouGet && (
               <div className="mt-4 flex items-start gap-3 bg-teal-50 border border-teal-200 rounded-xl p-3">
                 <Award size={18} className="text-teal-700 shrink-0 mt-0.5" aria-hidden="true" />
                 <div>
                   <p className="text-xs font-semibold text-teal-800 uppercase tracking-wide">{trx("What you'll get", language)}</p>
-                  <p className="text-sm text-teal-900 mt-0.5 leading-relaxed">{service.whatYouGet}</p>
+                  <p className="text-sm text-teal-900 mt-0.5 leading-relaxed">{trx(service.whatYouGet, language)}</p>
                 </div>
               </div>
             )}
@@ -92,7 +92,7 @@ export default function ServiceDetailPage() {
                   {service.usedFor.map((use, i) => (
                     <li key={i} className="flex items-start gap-2 text-sm text-slate-600">
                       <CheckCircle2 size={15} className="text-teal-600 mt-0.5 shrink-0" aria-hidden="true" />
-                      {use}
+                      {trx(use, language)}
                     </li>
                   ))}
                 </ul>
@@ -117,10 +117,10 @@ export default function ServiceDetailPage() {
                   </div>
                   <div>
                     <p className="text-sm font-semibold text-slate-800">
-                      {doc.name}
+                      {language === 'ta' ? doc.nameTa : language === 'hi' ? doc.nameHi : doc.name}
                       {doc.required && <span className="text-red-600 ml-1" aria-hidden="true">*</span>}
                     </p>
-                    <p className="text-xs text-slate-500 mt-0.5">{doc.description}</p>
+                    <p className="text-xs text-slate-500 mt-0.5">{trx(doc.description, language)}</p>
                     <p className="text-xs text-slate-400 mt-1">{doc.accepted.join(', ')} · Max {doc.maxSizeMB} MB</p>
                   </div>
                 </div>
@@ -154,8 +154,8 @@ export default function ServiceDetailPage() {
                     {i + 1}
                   </span>
                   <div>
-                    <p className="text-sm font-semibold text-slate-800">{step.title}</p>
-                    <p className="text-xs text-slate-500">{step.description}</p>
+                    <p className="text-sm font-semibold text-slate-800">{trx(step.title, language)}</p>
+                    <p className="text-xs text-slate-500">{trx(step.description, language)}</p>
                   </div>
                 </li>
               ))}
@@ -182,10 +182,10 @@ export default function ServiceDetailPage() {
                 {service.faqs.map((faq, i) => (
                   <details key={i} className="group py-2">
                     <summary className="flex items-center justify-between gap-3 cursor-pointer list-none py-1.5 text-sm font-semibold text-slate-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-gov-600 rounded">
-                      {faq.question}
+                      {trx(faq.question, language)}
                       <ChevronDown size={16} className="text-slate-400 shrink-0 transition-transform group-open:rotate-180" aria-hidden="true" />
                     </summary>
-                    <p className="text-sm text-slate-600 leading-relaxed pt-1 pb-2">{faq.answer}</p>
+                    <p className="text-sm text-slate-600 leading-relaxed pt-1 pb-2">{trx(faq.answer, language)}</p>
                   </details>
                 ))}
               </div>
@@ -227,21 +227,21 @@ export default function ServiceDetailPage() {
                 <Clock size={18} className="text-teal-300 shrink-0" aria-hidden="true" />
                 <div>
                   <p className="text-xs text-white/60">{trx('Estimated time', language)}</p>
-                  <p className="text-sm font-semibold">~{service.estimatedMinutes} minutes</p>
+                  <p className="text-sm font-semibold">~{service.estimatedMinutes} {trx('minutes', language)}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <FileText size={18} className="text-teal-300 shrink-0" aria-hidden="true" />
                 <div>
                   <p className="text-xs text-white/60">{trx('Documents needed', language)}</p>
-                  <p className="text-sm font-semibold">{service.documents.length} documents</p>
+                  <p className="text-sm font-semibold">{service.documents.length} {trx('documents', language)}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <IndianRupee size={18} className="text-teal-300 shrink-0" aria-hidden="true" />
                 <div>
                   <p className="text-xs text-white/60">{trx('Application fee', language)}</p>
-                  <p className="text-sm font-semibold">{service.fee}</p>
+                  <p className="text-sm font-semibold">{trx(service.fee, language)}</p>
                 </div>
               </div>
               {service.processingTime && (
@@ -249,7 +249,7 @@ export default function ServiceDetailPage() {
                   <CalendarDays size={18} className="text-teal-300 shrink-0" aria-hidden="true" />
                   <div>
                     <p className="text-xs text-white/60">{trx('Processing time', language)}</p>
-                    <p className="text-sm font-semibold">{service.processingTime}</p>
+                    <p className="text-sm font-semibold">{trx(service.processingTime, language)}</p>
                   </div>
                 </div>
               )}
@@ -258,7 +258,7 @@ export default function ServiceDetailPage() {
                   <Building2 size={18} className="text-teal-300 shrink-0 mt-0.5" aria-hidden="true" />
                   <div>
                     <p className="text-xs text-white/60">{trx('Issued by', language)}</p>
-                    <p className="text-sm font-semibold leading-snug">{service.department}</p>
+                    <p className="text-sm font-semibold leading-snug">{trx(service.department, language)}</p>
                   </div>
                 </div>
               )}
@@ -267,7 +267,7 @@ export default function ServiceDetailPage() {
                   <Phone size={18} className="text-teal-300 shrink-0 mt-0.5" aria-hidden="true" />
                   <div>
                     <p className="text-xs text-white/60">{trx('Helpline', language)}</p>
-                    <p className="text-sm font-semibold leading-snug">{service.helpline}</p>
+                    <p className="text-sm font-semibold leading-snug">{trx(service.helpline, language)}</p>
                   </div>
                 </div>
               )}

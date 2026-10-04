@@ -504,6 +504,31 @@ export const dict: Record<string, Pair> = {
   'I am 60 years or older': { ta: 'எனக்கு 60 வயது அல்லது அதற்கு மேல்', hi: 'मैं 60 वर्ष या उससे अधिक का हूं' },
   "I need to prove my family's income": { ta: 'என் குடும்பத்தின் வருமானத்தை நிரூபிக்க வேண்டும்', hi: 'मुझे अपने परिवार की आय साबित करनी है' },
   'These suggestions are based on your answers and are not official eligibility decisions.': { ta: 'இந்த பரிந்துரைகள் உங்கள் பதில்களின் அடிப்படையிலானவை, இவை அதிகாரப்பூர்வ தகுதி முடிவுகள் அல்ல.', hi: 'ये सुझाव आपके उत्तरों पर आधारित हैं और आधिकारिक पात्रता निर्णय नहीं हैं।' },
+
+  // ---- Income Certificate service content (showcased service) ----
+  'minutes': { ta: 'நிமிடங்கள்', hi: 'मिनट' },
+  'An Income Certificate is an official government document that confirms the annual income of an individual or their family. It is commonly required for availing various government schemes, scholarships, educational fee concessions, and other welfare benefits.': { ta: 'வருமான சான்றிதழ் என்பது ஒரு தனிநபர் அல்லது அவரது குடும்பத்தின் ஆண்டு வருமானத்தை உறுதிப்படுத்தும் அதிகாரப்பூர்வ அரசு ஆவணமாகும். பல்வேறு அரசுத் திட்டங்கள், உதவித்தொகைகள், கல்விக் கட்டண விலக்குகள் மற்றும் பிற நலன் பலன்களைப் பெற இது பொதுவாகத் தேவைப்படுகிறது.', hi: 'आय प्रमाण पत्र एक आधिकारिक सरकारी दस्तावेज़ है जो किसी व्यक्ति या उसके परिवार की वार्षिक आय की पुष्टि करता है। यह विभिन्न सरकारी योजनाओं, छात्रवृत्तियों, शैक्षणिक शुल्क रियायतों और अन्य कल्याणकारी लाभों का लाभ उठाने के लिए सामान्यतः आवश्यक होता है।' },
+  "A digitally-signed Income Certificate (PDF) stating your family's annual income, downloadable and valid for official use.": { ta: 'உங்கள் குடும்பத்தின் ஆண்டு வருமானத்தைக் குறிப்பிடும், பதிவிறக்கம் செய்யக்கூடிய மற்றும் அதிகாரப்பூர்வ பயன்பாட்டிற்கு செல்லுபடியாகும் டிஜிட்டல் கையொப்பமிடப்பட்ட வருமான சான்றிதழ் (PDF).', hi: 'आपके परिवार की वार्षिक आय बताने वाला एक डिजिटल रूप से हस्ताक्षरित आय प्रमाण पत्र (PDF), जो डाउनलोड करने योग्य और आधिकारिक उपयोग के लिए मान्य है।' },
+  'Applying for scholarships': { ta: 'உதவித்தொகைகளுக்கு விண்ணப்பித்தல்', hi: 'छात्रवृत्ति के लिए आवेदन' },
+  'School or college fee waivers': { ta: 'பள்ளி அல்லது கல்லூரி கட்டண விலக்குகள்', hi: 'स्कूल या कॉलेज शुल्क माफी' },
+  'Government welfare benefits': { ta: 'அரசு நலன் பலன்கள்', hi: 'सरकारी कल्याण लाभ' },
+  'Housing schemes': { ta: 'வீட்டுவசதி திட்டங்கள்', hi: 'आवास योजनाएं' },
+  'Medical assistance programs': { ta: 'மருத்துவ உதவித் திட்டங்கள்', hi: 'चिकित्सा सहायता कार्यक्रम' },
+  'Free (No application fee)': { ta: 'இலவசம் (விண்ணப்பக் கட்டணம் இல்லை)', hi: 'निःशुल्क (कोई आवेदन शुल्क नहीं)' },
+  '7–15 working days': { ta: '7–15 வேலை நாட்கள்', hi: '7–15 कार्य दिवस' },
+  'Revenue Department, Government of Tamil Nadu': { ta: 'வருவாய்த் துறை, தமிழ்நாடு அரசு', hi: 'राजस्व विभाग, तमिलनाडु सरकार' },
+  '1100 (Tamil Nadu e-Sevai Helpline)': { ta: '1100 (தமிழ்நாடு இ-சேவை உதவி எண்)', hi: '1100 (तमिलनाडु ई-सेवई हेल्पलाइन)' },
+  'A document that confirms your identity.': { ta: 'உங்கள் அடையாளத்தை உறுதிப்படுத்தும் ஆவணம்.', hi: 'एक दस्तावेज़ जो आपकी पहचान की पुष्टि करता है।' },
+  'A document confirming your current residential address.': { ta: 'உங்கள் தற்போதைய குடியிருப்பு முகவரியை உறுதிப்படுத்தும் ஆவணம்.', hi: 'आपके वर्तमान आवासीय पते की पुष्टि करने वाला दस्तावेज़।' },
+  "A document showing your or your family's income.": { ta: 'உங்கள் அல்லது உங்கள் குடும்பத்தின் வருமானத்தைக் காட்டும் ஆவணம்.', hi: 'आपकी या आपके परिवार की आय दर्शाने वाला दस्तावेज़।' },
+  'Your Tamil Nadu family card listing household members.': { ta: 'வீட்டு உறுப்பினர்களை பட்டியலிடும் உங்கள் தமிழ்நாடு குடும்ப அட்டை.', hi: 'घर के सदस्यों की सूची वाला आपका तमिलनाडु परिवार कार्ड।' },
+  'A recent passport-size photograph of the applicant.': { ta: 'விண்ணப்பதாரரின் சமீபத்திய கடவுச்சீட்டு அளவு புகைப்படம்.', hi: 'आवेदक की हाल की पासपोर्ट आकार की तस्वीर।' },
+  'How is "family income" calculated?': { ta: '"குடும்ப வருமானம்" எவ்வாறு கணக்கிடப்படுகிறது?', hi: '"पारिवारिक आय" की गणना कैसे की जाती है?' },
+  'It is the combined annual income of all earning members living in the same household, from all sources (salary, business, agriculture, pension, etc.).': { ta: 'இது ஒரே வீட்டில் வசிக்கும் அனைத்து சம்பாதிக்கும் உறுப்பினர்களின், அனைத்து ஆதாரங்களிலிருந்தும் (சம்பளம், வணிகம், விவசாயம், ஓய்வூதியம் போன்றவை) கிடைக்கும் ஒருங்கிணைந்த ஆண்டு வருமானமாகும்.', hi: 'यह एक ही घर में रहने वाले सभी कमाने वाले सदस्यों की सभी स्रोतों (वेतन, व्यवसाय, कृषि, पेंशन आदि) से संयुक्त वार्षिक आय है।' },
+  'How long is an Income Certificate valid?': { ta: 'வருமான சான்றிதழ் எவ்வளவு காலத்திற்கு செல்லுபடியாகும்?', hi: 'आय प्रमाण पत्र कितने समय तक मान्य है?' },
+  'An Income Certificate is generally valid for one year from the date of issue. You will need a fresh certificate after that.': { ta: 'வருமான சான்றிதழ் பொதுவாக வழங்கப்பட்ட தேதியிலிருந்து ஒரு வருடத்திற்கு செல்லுபடியாகும். அதன் பிறகு உங்களுக்கு புதிய சான்றிதழ் தேவைப்படும்.', hi: 'आय प्रमाण पत्र आमतौर पर जारी होने की तिथि से एक वर्ष के लिए मान्य होता है। उसके बाद आपको एक नया प्रमाण पत्र चाहिए होगा।' },
+  'Do I need to pay anything?': { ta: 'நான் ஏதேனும் கட்டணம் செலுத்த வேண்டுமா?', hi: 'क्या मुझे कुछ भुगतान करना होगा?' },
+  'No. Applying for an Income Certificate through the government portal is free of cost.': { ta: 'இல்லை. அரசு இணையதளம் மூலம் வருமான சான்றிதழுக்கு விண்ணப்பிப்பது இலவசம்.', hi: 'नहीं। सरकारी पोर्टल के माध्यम से आय प्रमाण पत्र के लिए आवेदन करना निःशुल्क है।' },
 };
 
 export function trx(text: string, lang: Language): string {
