@@ -7,12 +7,15 @@ import { StatusBadge } from '@/components/ui/Badge';
 import { ProgressBar } from '@/components/ui/Progress';
 import { ChevronRight, AlertCircle } from 'lucide-react';
 import type { Application } from '@/lib/types';
+import { useApp } from '@/context/AppContext';
+import { trx } from '@/lib/translations';
 
 interface ApplicationCardProps {
   application: Application;
 }
 
 export function ApplicationCard({ application }: ApplicationCardProps) {
+  const { language } = useApp();
   const hasAction = application.status === 'action_required';
   const isDraft = application.status === 'draft';
 
@@ -44,7 +47,7 @@ export function ApplicationCard({ application }: ApplicationCardProps) {
       {hasAction && (
         <div className="flex items-start gap-2 mb-3 text-sm text-orange-800 bg-orange-100 rounded-lg p-3">
           <AlertCircle size={15} className="mt-0.5 shrink-0" aria-hidden="true" />
-          <span>An action is needed from you. Tap to see what&apos;s required.</span>
+          <span>{trx("An action is needed from you. Tap to see what's required.", language)}</span>
         </div>
       )}
 
@@ -60,10 +63,10 @@ export function ApplicationCard({ application }: ApplicationCardProps) {
 
       <div className="flex items-center justify-between text-xs text-slate-500">
         <span>
-          {isDraft ? 'Last edited' : 'Last updated'}: {formatRelative(application.lastUpdated)}
+          {trx(isDraft ? 'Last edited' : 'Last updated', language)}: {formatRelative(application.lastUpdated)}
         </span>
         <span className="flex items-center gap-1 text-gov-600 font-semibold group-hover:gap-2 transition-all">
-          {isDraft ? 'Continue' : 'View details'}
+          {trx(isDraft ? 'Continue' : 'View details', language)}
           <ChevronRight size={14} aria-hidden="true" />
         </span>
       </div>

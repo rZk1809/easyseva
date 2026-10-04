@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Home, Grid, FileText, HelpCircle, User } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
+import { trx } from '@/lib/translations';
 
 const NAV_ITEMS = [
   { href: '/home', icon: Home, label: 'Home' },
@@ -17,7 +18,7 @@ const NAV_ITEMS = [
 
 export function MobileNav() {
   const pathname = usePathname();
-  const { } = useApp();
+  const { language } = useApp();
   const hiddenRoutes = ['/', '/language'];
   if (hiddenRoutes.includes(pathname)) return null;
 
@@ -39,14 +40,14 @@ export function MobileNav() {
                 active ? 'text-gov-700' : 'text-slate-500 hover:text-slate-900'
               )}
               aria-current={active ? 'page' : undefined}
-              aria-label={label}
+              aria-label={trx(label, language)}
             >
               <Icon
                 size={22}
                 strokeWidth={active ? 2.5 : 1.75}
                 aria-hidden="true"
               />
-              <span className={cn('text-xs font-medium', active ? 'text-gov-700 font-semibold' : '')}>{label}</span>
+              <span className={cn('text-xs font-medium', active ? 'text-gov-700 font-semibold' : '')}>{trx(label, language)}</span>
               {active && (
                 <span className="absolute bottom-0 w-8 h-0.5 bg-gov-600 rounded-full" aria-hidden="true" />
               )}

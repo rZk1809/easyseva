@@ -3,6 +3,7 @@
 import React, { useRef, useState } from 'react';
 import { cn, formatFileSize } from '@/lib/utils';
 import { useApp } from '@/context/AppContext';
+import { trx } from '@/lib/translations';
 import type { DocumentRequirement, UploadedDocument } from '@/lib/types';
 import { Button } from '@/components/ui/Button';
 import { Alert } from '@/components/ui/Alert';
@@ -17,7 +18,8 @@ interface DocumentUploadProps {
 }
 
 export function DocumentUpload({ serviceId, requirement }: DocumentUploadProps) {
-  const { uploadedDocs, addDocument, removeDocument } = useApp();
+  const { uploadedDocs, addDocument, removeDocument, language } = useApp();
+  const reqName = language === 'ta' ? requirement.nameTa : language === 'hi' ? requirement.nameHi : requirement.name;
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -95,11 +97,11 @@ export function DocumentUpload({ serviceId, requirement }: DocumentUploadProps) 
       <div className="flex items-start justify-between gap-3 mb-3">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <h3 className="font-semibold text-slate-900 text-sm sm:text-base">{requirement.name}</h3>
+            <h3 className="font-semibold text-slate-900 text-sm sm:text-base">{reqName}</h3>
             {requirement.required ? (
-              <span className="text-xs font-semibold text-red-600 bg-red-50 border border-red-200 px-2 py-0.5 rounded-full">Required</span>
+              <span className="text-xs font-semibold text-red-600 bg-red-50 border border-red-200 px-2 py-0.5 rounded-full">{trx('Required', language)}</span>
             ) : (
-              <span className="text-xs font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full">Optional</span>
+              <span className="text-xs font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full">{trx('Optional', language)}</span>
             )}
           </div>
           <p className="text-sm text-slate-500 mt-0.5">{requirement.description}</p>
@@ -121,12 +123,12 @@ export function DocumentUpload({ serviceId, requirement }: DocumentUploadProps) 
         aria-expanded={showExamples}
       >
         {showExamples ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
-        What can I use as {requirement.name.toLowerCase()}?
+        {trx('What can I use?', language)}
       </button>
 
       {showExamples && (
         <div className="mb-3 bg-blue-50 border border-blue-200 rounded-lg p-3 animate-fade-in">
-          <p className="text-xs font-semibold text-blue-800 mb-1.5">Accepted documents:</p>
+          <p className="text-xs font-semibold text-blue-800 mb-1.5">{trx('Accepted documents:', language)}</p>
           <ul className="space-y-1">
             {requirement.examples.map((ex, i) => (
               <li key={i} className="text-sm text-blue-900 flex items-start gap-2">
@@ -146,7 +148,7 @@ export function DocumentUpload({ serviceId, requirement }: DocumentUploadProps) 
             <File size={18} className="text-green-700 shrink-0" aria-hidden="true" />
             <div className="min-w-0">
               <p className="text-sm font-semibold text-green-900 truncate">{uploaded.filename}</p>
-              <p className="text-xs text-green-700">{formatFileSize(uploaded.sizeKB)} · Uploaded successfully</p>
+              <p className="text-xs text-green-700">{formatFileSize(uploaded.sizeKB)} · {trx('Uploaded successfully', language)}</p>
             </div>
           </div>
           <div className="flex items-center gap-1 shrink-0">
@@ -179,7 +181,7 @@ export function DocumentUpload({ serviceId, requirement }: DocumentUploadProps) 
             className="flex-1"
             aria-label={`Upload ${requirement.name}`}
           >
-            {uploading ? 'Uploading…' : 'Upload Document'}
+            {uploading ? trx('Uploading…', language) : trx('Upload Document', language)}
           </Button>
           <Button
             variant="ghost"
@@ -187,9 +189,9 @@ export function DocumentUpload({ serviceId, requirement }: DocumentUploadProps) 
             iconLeft={<Camera size={16} />}
             onClick={() => fileInputRef.current?.click()}
             className="flex-1"
-            aria-label={`Take photo for ${requirement.name}`}
+            aria-label={`Take photo for ${reqName}`}
           >
-            Take Photo
+            {trx('Take Photo', language)}
           </Button>
         </div>
       )}

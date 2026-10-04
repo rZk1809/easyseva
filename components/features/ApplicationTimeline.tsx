@@ -1,14 +1,19 @@
+'use client';
+
 import React from 'react';
 import { cn, formatDate } from '@/lib/utils';
 import type { ApplicationStatusStep } from '@/lib/types';
 import { CheckCircle2, Circle, Loader2, AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { useApp } from '@/context/AppContext';
+import { trx } from '@/lib/translations';
 
 interface TimelineProps {
   steps: ApplicationStatusStep[];
 }
 
 export function ApplicationTimeline({ steps }: TimelineProps) {
+  const { language } = useApp();
   return (
     <ol className="space-y-0" aria-label="Application timeline">
       {steps.map((step, i) => {
@@ -41,7 +46,7 @@ export function ApplicationTimeline({ steps }: TimelineProps) {
                     step.status === 'pending' && 'text-slate-500'
                   )}
                 >
-                  {step.title}
+                  {trx(step.title, language)}
                 </h3>
                 {step.date && (
                   <span className="text-xs text-slate-500 shrink-0">{formatDate(step.date)}</span>
@@ -49,13 +54,13 @@ export function ApplicationTimeline({ steps }: TimelineProps) {
               </div>
 
               <p className={cn('text-sm mt-1 leading-relaxed', step.status === 'pending' ? 'text-slate-400' : 'text-slate-600')}>
-                {step.description}
+                {trx(step.description, language)}
               </p>
 
               {step.status === 'in_progress' && (
                 <p className="text-sm font-medium text-navy-700 mt-1.5 flex items-center gap-1.5">
                   <Loader2 size={13} className="animate-spin" aria-hidden="true" />
-                  No action required from you right now.
+                  {trx('No action required from you right now.', language)}
                 </p>
               )}
 
@@ -68,7 +73,7 @@ export function ApplicationTimeline({ steps }: TimelineProps) {
                     size="sm"
                     iconLeft={<AlertTriangle size={14} />}
                   >
-                    {step.actionLabel}
+                    {trx(step.actionLabel, language)}
                   </Button>
                 </div>
               )}

@@ -1,5 +1,9 @@
+'use client';
+
 import React from 'react';
 import { cn } from '@/lib/utils';
+import { useApp } from '@/context/AppContext';
+import { trx } from '@/lib/translations';
 import {
   CheckCircle2,
   Clock,
@@ -67,6 +71,7 @@ export function StatusBadge({ status, className }: { status: string; className?:
     in_progress: { variant: 'in_progress', label: 'In Progress' },
     pending: { variant: 'pending', label: 'Pending' },
   };
+  const { language } = useApp();
   const { variant, label } = map[status] ?? { variant: 'neutral' as BadgeVariant, label: status };
-  return <Badge variant={variant} className={className}>{label}</Badge>;
+  return <Badge variant={variant} className={className}>{trx(label, language)}</Badge>;
 }

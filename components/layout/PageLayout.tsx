@@ -1,7 +1,11 @@
+'use client';
+
 import React from 'react';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { ChevronLeft } from 'lucide-react';
+import { useApp } from '@/context/AppContext';
+import { trx } from '@/lib/translations';
 
 interface PageLayoutProps {
   children: React.ReactNode;
@@ -45,6 +49,7 @@ interface PageHeaderProps {
 }
 
 export function PageHeader({ title, description, backHref, backLabel = 'Back', actions, className }: PageHeaderProps) {
+  const { language } = useApp();
   return (
     <div className={cn('mb-6 sm:mb-8', className)}>
       {backHref && (
@@ -53,14 +58,14 @@ export function PageHeader({ title, description, backHref, backLabel = 'Back', a
           className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-navy-800 mb-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-gov-600 rounded-lg px-1 py-0.5 -ml-1"
         >
           <ChevronLeft size={16} aria-hidden="true" />
-          {backLabel}
+          {trx(backLabel, language)}
         </Link>
       )}
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 leading-tight">{title}</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 leading-tight">{trx(title, language)}</h1>
           {description && (
-            <p className="mt-1.5 text-slate-600 text-base sm:text-lg">{description}</p>
+            <p className="mt-1.5 text-slate-600 text-base sm:text-lg">{trx(description, language)}</p>
           )}
         </div>
         {actions && <div className="flex items-center gap-2">{actions}</div>}
@@ -70,10 +75,11 @@ export function PageHeader({ title, description, backHref, backLabel = 'Back', a
 }
 
 export function SectionHeader({ title, description, className }: { title: string; description?: string; className?: string }) {
+  const { language } = useApp();
   return (
     <div className={cn('mb-4', className)}>
-      <h2 className="text-lg font-bold text-slate-800">{title}</h2>
-      {description && <p className="text-sm text-slate-600 mt-0.5">{description}</p>}
+      <h2 className="text-lg font-bold text-slate-800">{trx(title, language)}</h2>
+      {description && <p className="text-sm text-slate-600 mt-0.5">{trx(description, language)}</p>}
     </div>
   );
 }

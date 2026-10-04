@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { useApp } from '@/context/AppContext';
-import { tr } from '@/lib/translations';
+import { tr, trx } from '@/lib/translations';
 import { ChevronRight, Clock, FileText, GraduationCap, Heart, Users, UserCheck, Edit3, Grid, HelpCircle } from 'lucide-react';
 import type { ServiceCategory, Service } from '@/lib/types';
 
@@ -39,7 +39,7 @@ export function ServiceCategoryCard({ category, href }: ServiceCategoryCardProps
           <Icon size={24} className={category.color} aria-hidden="true" />
         </div>
         <span className="text-xs font-semibold text-slate-500 bg-slate-100 rounded-full px-2.5 py-1 mt-1 shrink-0">
-          {category.count} services
+          {category.count} {trx('services', language)}
         </span>
       </div>
       <div className="flex-1">
@@ -79,9 +79,9 @@ export function ServiceListItem({ service, href }: ServiceListItemProps) {
         <div className="flex items-center gap-4 mt-2 text-xs text-slate-500">
           <span className="flex items-center gap-1">
             <Clock size={12} aria-hidden="true" />
-            ~{service.estimatedMinutes} min
+            ~{service.estimatedMinutes} {trx('min', language)}
           </span>
-          <span>{service.documents.length} documents needed</span>
+          <span>{service.documents.length} {trx('documents needed', language)}</span>
           <span className="text-green-600 font-medium">{service.fee}</span>
         </div>
       </div>
