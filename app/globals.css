@@ -78,17 +78,84 @@
   font-size: 1.25rem;
 }
 
-/* High contrast mode */
+/* ------------------------------------------------------------------ */
+/* High contrast mode                                                  */
+/* Components use Tailwind colour utilities directly, so changing CSS   */
+/* variables alone is not enough. These rules force a readable dark     */
+/* theme (black surfaces, white text, white borders) across the app.   */
+/* ------------------------------------------------------------------ */
 .high-contrast {
   --es-bg: #000000;
-  --es-surface: #1a1a1a;
-  --es-surface-raised: #2a2a2a;
+  --es-surface: #000000;
+  --es-surface-raised: #0a0a0a;
   --es-border: #ffffff;
-  --es-border-focus: #ffff00;
+  --es-border-focus: #ffee00;
   --es-text-primary: #ffffff;
-  --es-text-secondary: #e0e0e0;
-  --es-text-muted: #c0c0c0;
-  --es-focus-ring: 0 0 0 3px #ffff00;
+  --es-text-secondary: #ffffff;
+  --es-text-muted: #e5e5e5;
+  --es-focus-ring: 0 0 0 3px #ffee00;
+  background-color: #000000;
+  color: #ffffff;
+}
+
+/* Every utility background becomes solid black. */
+.high-contrast body,
+.high-contrast [class*="bg-"] {
+  background-color: #000000 !important;
+}
+
+/* Every text utility (greyscale and brand) becomes white. */
+.high-contrast,
+.high-contrast [class*="text-"],
+.high-contrast p,
+.high-contrast span,
+.high-contrast h1,
+.high-contrast h2,
+.high-contrast h3,
+.high-contrast h4,
+.high-contrast h5,
+.high-contrast li,
+.high-contrast label,
+.high-contrast strong,
+.high-contrast div {
+  color: #ffffff !important;
+}
+
+/* All borders become clearly visible white. */
+.high-contrast [class*="border"] {
+  border-color: #ffffff !important;
+}
+
+/* Form controls: black field, white text, strong white outline. */
+.high-contrast input,
+.high-contrast select,
+.high-contrast textarea {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border: 2px solid #ffffff !important;
+}
+.high-contrast ::placeholder { color: #c9c9c9 !important; opacity: 1; }
+
+/* Links and buttons get an outline so interactive elements stand out. */
+.high-contrast a { color: #ffee00 !important; text-decoration: underline; }
+.high-contrast button { border: 2px solid #ffffff !important; }
+
+/* Primary action buttons and dark hero areas become bright yellow with
+   black text, so the main call to action is unmistakable. Placed last so
+   it wins over the generic black-background rule above. */
+.high-contrast .bg-navy-800,
+.high-contrast .bg-navy-900,
+.high-contrast .bg-gov-600,
+.high-contrast .bg-gov-700,
+.high-contrast .bg-teal-700 {
+  background-color: #ffee00 !important;
+}
+.high-contrast .bg-navy-800 *,
+.high-contrast .bg-navy-900 *,
+.high-contrast .bg-gov-600 *,
+.high-contrast .bg-gov-700 *,
+.high-contrast .bg-teal-700 * {
+  color: #000000 !important;
 }
 
 html {
