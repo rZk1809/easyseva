@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useApp } from '@/context/AppContext';
 import { useAuth } from '@/context/AuthContext';
-import { tr } from '@/lib/translations';
+import { tr, trx } from '@/lib/translations';
 import {
   Bell,
   Settings,
@@ -210,13 +210,13 @@ export function Header() {
                           <p className="text-xs font-semibold text-slate-700 truncate">{user.email}</p>
                         </div>
                         <Link href="/profile" onClick={() => setUserMenuOpen(false)} className="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50">
-                          <User size={14} /> Profile
+                          <User size={14} /> {trx('Profile', language)}
                         </Link>
                         <button
                           onClick={() => { logout(); setUserMenuOpen(false); }}
                           className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50"
                         >
-                          <LogOut size={14} /> Sign out
+                          <LogOut size={14} /> {trx('Sign out', language)}
                         </button>
                       </div>
                     )}
@@ -226,7 +226,7 @@ export function Header() {
                     href="/login"
                     className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold text-navy-800 border border-navy-200 hover:bg-navy-50 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-navy-700"
                   >
-                    <LogIn size={15} /> Sign in
+                    <LogIn size={15} /> {trx('Sign in', language)}
                   </Link>
                 )}
                 {userMenuOpen && (

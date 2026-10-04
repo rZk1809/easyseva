@@ -1,6 +1,10 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import { ChevronRight, Home } from 'lucide-react';
+import { useApp } from '@/context/AppContext';
+import { trx } from '@/lib/translations';
 
 export interface Crumb {
   label: string;
@@ -12,6 +16,7 @@ export interface Crumb {
  * rather than recall" by always showing where the user is in the hierarchy.
  */
 export function Breadcrumbs({ items }: { items: Crumb[] }) {
+  const { language } = useApp();
   return (
     <nav aria-label="Breadcrumb" className="mb-4">
       <ol className="flex items-center flex-wrap gap-1.5 text-sm text-slate-500">
@@ -26,11 +31,11 @@ export function Breadcrumbs({ items }: { items: Crumb[] }) {
                   className="flex items-center gap-1 hover:text-gov-700 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-gov-600 rounded px-0.5"
                 >
                   {i === 0 && <Home size={13} aria-hidden="true" />}
-                  {item.label}
+                  {trx(item.label, language)}
                 </Link>
               ) : (
                 <span className={isLast ? 'font-semibold text-slate-700' : ''} aria-current={isLast ? 'page' : undefined}>
-                  {item.label}
+                  {trx(item.label, language)}
                 </span>
               )}
             </li>

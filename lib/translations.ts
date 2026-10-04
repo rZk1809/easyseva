@@ -94,6 +94,7 @@ export const dict: Record<string, Pair> = {
   'Get Help': { ta: 'உதவி பெறு', hi: 'मदद लें' },
   'Sign in': { ta: 'உள்நுழை', hi: 'साइन इन करें' },
   'Sign out': { ta: 'வெளியேறு', hi: 'साइन आउट' },
+  'Profile': { ta: 'சுயவிவரம்', hi: 'प्रोफाइल' },
   'Save': { ta: 'சேமி', hi: 'सहेजें' },
   'Cancel': { ta: 'ரத்துசெய்', hi: 'रद्द करें' },
   'Saving…': { ta: 'சேமிக்கிறது…', hi: 'सहेज रहे हैं…' },
