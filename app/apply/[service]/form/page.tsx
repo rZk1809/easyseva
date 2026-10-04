@@ -13,6 +13,8 @@ import { StepProgress } from '@/components/ui/Progress';
 import { ConfirmDialog } from '@/components/ui/Dialog';
 import { cn } from '@/lib/utils';
 import type { FormField, FormStep } from '@/lib/types';
+import type { Language } from '@/lib/types';
+import { trx } from '@/lib/translations';
 import { Save, CheckCircle2, ArrowRight, ArrowLeft, HelpCircle } from 'lucide-react';
 
 type FieldErrors = Record<string, string>;
@@ -44,16 +46,18 @@ function FormFieldRenderer({
   error,
   onChange,
   onBlur,
+  language,
 }: {
   field: FormField;
   value: string;
   error?: string;
   onChange: (id: string, value: string) => void;
   onBlur: (id: string) => void;
+  language: Language;
 }) {
   const commonProps = {
     id: field.id,
-    label: field.label,
+    label: trx(field.label, language),
     required: field.required,
     helperText: field.helperText,
     error: error,
@@ -67,8 +71,8 @@ function FormFieldRenderer({
         value={value}
         onChange={e => onChange(field.id, e.target.value)}
         onBlur={() => onBlur(field.id)}
-        options={field.options}
-        placeholder="Choose one…"
+        options={field.options.map(o => ({ ...o, label: trx(o.label, language) }))}
+        placeholder={trx('Choose one…', language)}
       />
     );
   }
@@ -218,13 +222,13 @@ export default function FormPage() {
             {saveStatus === 'saving' && (
               <span className="flex items-center gap-1 text-amber-600">
                 <span className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse" aria-hidden="true" />
-                Saving…
+                {trx('Saving…', language)}
               </span>
             )}
             {saveStatus === 'saved' && (
               <span className="flex items-center gap-1 text-green-600" role="status" aria-live="polite">
                 <CheckCircle2 size={13} />
-                Saved
+                {trx('Saved', language)}
               </span>
             )}
           </div>
@@ -233,23 +237,23 @@ export default function FormPage() {
         <StepProgress
           currentStep={currentStepIdx + 1}
           totalSteps={steps.length + 1}
-          stepTitles={[...stepTitles, 'Review']}
+          stepTitles={[...stepTitles.map(s => trx(s, language)), trx('Review', language)]}
           className="mb-3"
         />
 
         <p className="text-xs text-slate-500 text-center">
-          Step {currentStepIdx + 1} of {steps.length + 1}
+          {trx('Step', language)} {currentStepIdx + 1} {trx('of', language)} {steps.length + 1}
         </p>
       </div>
 
       {/* Step card */}
       <Card shadow="md" className="animate-fade-in-up">
         <div className="mb-6">
-          <h2 className="text-xl font-bold text-slate-900">{step.title}</h2>
-          <p className="text-slate-500 text-sm mt-1">{step.description}</p>
+          <h2 className="text-xl font-bold text-slate-900">{trx(step.title, language)}</h2>
+          <p className="text-slate-500 text-sm mt-1">{trx(step.description, language)}</p>
         </div>
 
-        <p className="text-xs text-slate-400 mb-5">Fields marked <span className="text-red-600 font-bold">*</span> are required</p>
+        <p className="text-xs text-slate-400 mb-5">{trx('Fields marked', language)} <span className="text-red-600 font-bold">*</span> {trx('are required', language)}</p>
 
         <div className="space-y-5">
           {step.fields.map(field => (
@@ -260,6 +264,7 @@ export default function FormPage() {
               error={touched[field.id] ? errors[field.id] : undefined}
               onChange={handleChange}
               onBlur={handleBlur}
+              language={language}
             />
           ))}
         </div>
@@ -273,7 +278,7 @@ export default function FormPage() {
             onClick={handleNext}
             iconRight={<ArrowRight size={18} />}
           >
-            {isLast ? 'Review Application' : 'Save & Continue'}
+            {isLast ? trx('Review Application', language) : trx('Save & Continue', language)}
           </Button>
 
           <div className="flex gap-3">
@@ -284,7 +289,7 @@ export default function FormPage() {
               iconLeft={<ArrowLeft size={16} />}
               className="flex-1"
             >
-              Back
+              {trx('Back', language)}
             </Button>
             <Button
               variant="ghost"
@@ -293,14 +298,14 @@ export default function FormPage() {
               iconLeft={<Save size={16} />}
               className="flex-1"
             >
-              Save & Exit
+              {trx('Save & Exit', language)}
             </Button>
           </div>
         </div>
       </Card>
 
       <p className="text-xs text-center text-slate-400 mt-4">
-        Your progress is saved automatically. You can continue later from &ldquo;My Applications&rdquo;.
+        {trx('Your progress is saved automatically. You can continue later from "My Applications".', language)}
       </p>
 
       {/* Help */}
@@ -310,7 +315,7 @@ export default function FormPage() {
           className="inline-flex items-center gap-1 text-sm text-gov-600 hover:text-gov-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-gov-600 rounded"
         >
           <HelpCircle size={14} />
-          Need help with this step?
+          {trx('Need help with this step?', language)}
         </a>
       </div>
 
@@ -321,10 +326,10 @@ export default function FormPage() {
           autosave(values);
           router.push(`/services/${service.categoryId}/${serviceId}`);
         }}
-        title="Leave this application?"
-        message="Your progress will be saved. You can continue from 'My Applications' whenever you're ready."
-        confirmLabel="Save & Leave"
-        cancelLabel="Stay Here"
+        title={trx('Leave this application?', language)}
+        message={trx("Your progress will be saved. You can continue from 'My Applications' whenever you're ready.", language)}
+        confirmLabel={trx('Save & Leave', language)}
+        cancelLabel={trx('Stay Here', language)}
       />
     </PageLayout>
   );

@@ -5,9 +5,12 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Mail, ArrowRight, Loader2, ShieldCheck } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useApp } from '@/context/AppContext';
+import { trx } from '@/lib/translations';
 
 export default function LoginPage() {
   const router = useRouter();
+  const { language } = useApp();
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -49,9 +52,9 @@ export default function LoginPage() {
           <div className="inline-flex items-center justify-center w-16 h-16 bg-navy-800 rounded-2xl mb-4 shadow-lg">
             <ShieldCheck size={32} className="text-white" />
           </div>
-          <h1 className="text-2xl font-bold text-navy-900">Sign in to EasySeva</h1>
+          <h1 className="text-2xl font-bold text-navy-900">{trx('Sign in to EasySeva', language)}</h1>
           <p className="text-slate-500 mt-1 text-sm">
-            We&apos;ll send a one-time code to your email
+            {trx("We'll send a one-time code to your email", language)}
           </p>
         </div>
 
@@ -59,7 +62,7 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit} noValidate>
             <div className="mb-5">
               <label htmlFor="email" className="block text-sm font-semibold text-slate-700 mb-1.5">
-                Email address
+                {trx('Email address', language)}
               </label>
               <div className="relative">
                 <Mail
@@ -101,9 +104,9 @@ export default function LoginPage() {
               )}
             >
               {loading ? (
-                <><Loader2 size={16} className="animate-spin" /> Sending OTP…</>
+                <><Loader2 size={16} className="animate-spin" /> {trx('Sending OTP…', language)}</>
               ) : (
-                <>Send OTP <ArrowRight size={16} /></>
+                <>{trx('Send OTP', language)} <ArrowRight size={16} /></>
               )}
             </button>
           </form>
@@ -117,7 +120,7 @@ export default function LoginPage() {
         </div>
 
         <p className="text-center text-xs text-slate-400 mt-6">
-          This is an HCI academic prototype. No real government data is stored.
+          {trx('This is an HCI academic prototype. No real government data is stored.', language)}
         </p>
       </div>
     </main>

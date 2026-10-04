@@ -12,10 +12,13 @@ import { Alert } from '@/components/ui/Alert';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { ApplicationTimeline } from '@/components/features/ApplicationTimeline';
 import { formatDate } from '@/lib/utils';
+import { useApp } from '@/context/AppContext';
+import { trx } from '@/lib/translations';
 import { Search, AlertTriangle, ExternalLink } from 'lucide-react';
 import type { Application } from '@/lib/types';
 
 function TrackContent() {
+  const { language } = useApp();
   const searchParams = useSearchParams();
   const initialRef = searchParams.get('ref') ?? '';
   const [query, setQuery] = useState(initialRef);
@@ -54,15 +57,15 @@ function TrackContent() {
       <Card className="mb-6">
         <form onSubmit={handleSearch} className="flex flex-col gap-4">
           <Input
-            label="Reference Number"
+            label={trx('Reference Number', language)}
             value={query}
             onChange={e => setQuery(e.target.value)}
             placeholder="e.g. ES-2026-34521"
-            helperText="Your reference number was shown after submitting. It starts with ES-."
+            helperText={trx('Your reference number was shown after submitting. It starts with ES-.', language)}
             required
           />
           <Button type="submit" variant="primary" size="md" fullWidth iconLeft={<Search size={16} />} disabled={loading}>
-            {loading ? 'Searching…' : 'Track Application'}
+            {loading ? trx('Searching…', language) : trx('Track Application', language)}
           </Button>
         </form>
       </Card>
@@ -76,7 +79,7 @@ function TrackContent() {
 
       {searched && !loading && !result && (
         <Alert variant="warning">
-          <strong>Application not found.</strong> Please check your reference number and try again. Make sure to enter it exactly as shown — for example, ES-2026-34521.
+          <strong>{trx('Application not found.', language)}</strong> {trx('Please check your reference number and try again.', language)}
         </Alert>
       )}
 
@@ -93,19 +96,19 @@ function TrackContent() {
 
             {result.status === 'action_required' && (
               <Alert variant="warning" className="mb-3">
-                <strong>Your action is needed.</strong> Please review the timeline below for details.
+                <strong>{trx('Your action is needed.', language)}</strong> {trx('Please review the timeline below for details.', language)}
               </Alert>
             )}
 
             <div className="grid grid-cols-2 gap-4 text-sm mt-3 pt-3 border-t border-slate-100">
               {result.submittedAt && (
                 <div>
-                  <p className="text-slate-500">Submitted</p>
+                  <p className="text-slate-500">{trx('Submitted', language)}</p>
                   <p className="font-semibold text-slate-800">{formatDate(result.submittedAt)}</p>
                 </div>
               )}
               <div>
-                <p className="text-slate-500">Last Updated</p>
+                <p className="text-slate-500">{trx('Last Updated', language)}</p>
                 <p className="font-semibold text-slate-800">{formatDate(result.lastUpdated)}</p>
               </div>
             </div>
@@ -113,7 +116,7 @@ function TrackContent() {
 
           {result.timeline.length > 0 && (
             <Card>
-              <h3 className="font-bold text-slate-900 mb-5">Application Progress</h3>
+              <h3 className="font-bold text-slate-900 mb-5">{trx('Application Progress', language)}</h3>
               <ApplicationTimeline steps={result.timeline} />
             </Card>
           )}
@@ -122,14 +125,14 @@ function TrackContent() {
             <div className="flex items-start gap-3">
               <AlertTriangle size={18} className="text-blue-600 mt-0.5 shrink-0" aria-hidden="true" />
               <div>
-                <p className="font-semibold text-blue-900 mb-1">What this means for you</p>
+                <p className="font-semibold text-blue-900 mb-1">{trx('What this means for you', language)}</p>
                 <p className="text-sm text-blue-800">
-                  {result.status === 'submitted' && 'Your application has been received. We will start processing it soon.'}
-                  {result.status === 'documents_verified' && 'Your documents have been checked and are in order.'}
-                  {result.status === 'under_review' && 'Your application is being reviewed by an officer. No action is needed from you right now.'}
-                  {result.status === 'action_required' && 'We need something from you. Please check the timeline above for details.'}
-                  {result.status === 'approved' && 'Congratulations! Your application has been approved.'}
-                  {result.status === 'rejected' && 'Unfortunately, your application was not approved. See the reason in the timeline above.'}
+                  {result.status === 'submitted' && trx('Your application has been received. We will start processing it soon.', language)}
+                  {result.status === 'documents_verified' && trx('Your documents have been checked and are in order.', language)}
+                  {result.status === 'under_review' && trx('Your application is being reviewed by an officer. No action is needed from you right now.', language)}
+                  {result.status === 'action_required' && trx('We need something from you. Please check the timeline above for details.', language)}
+                  {result.status === 'approved' && trx('Congratulations! Your application has been approved.', language)}
+                  {result.status === 'rejected' && trx('Unfortunately, your application was not approved. See the reason in the timeline above.', language)}
                 </p>
               </div>
             </div>
@@ -140,7 +143,7 @@ function TrackContent() {
               href="/applications"
               className="inline-flex items-center gap-2 text-sm font-semibold text-gov-600 hover:text-gov-800"
             >
-              View all my applications <ExternalLink size={14} />
+              {trx('View all my applications', language)} <ExternalLink size={14} />
             </Link>
           </div>
         </div>

@@ -3,12 +3,15 @@
 import React from 'react';
 import { useParams } from 'next/navigation';
 import { serviceCategories, services } from '@/lib/mockData';
+import { useApp } from '@/context/AppContext';
+import { trx } from '@/lib/translations';
 import { PageLayout, PageHeader } from '@/components/layout/PageLayout';
 import { ServiceListItem } from '@/components/features/ServiceCard';
 import { Alert } from '@/components/ui/Alert';
 
 export default function CategoryPage() {
   const params = useParams();
+  const { language } = useApp();
   const categoryId = params.category as string;
   const category = serviceCategories.find(c => c.id === categoryId);
   const categoryServices = services.filter(s => s.categoryId === categoryId);
@@ -16,23 +19,26 @@ export default function CategoryPage() {
   if (!category) {
     return (
       <PageLayout>
-        <Alert variant="error">Category not found.</Alert>
+        <Alert variant="error">{trx('Category not found.', language)}</Alert>
       </PageLayout>
     );
   }
 
+  const catTitle = language === 'ta' ? category.titleTa : language === 'hi' ? category.titleHi : category.title;
+  const catDesc = language === 'ta' ? category.descriptionTa : language === 'hi' ? category.descriptionHi : category.description;
+
   return (
     <PageLayout maxWidth="xl">
       <PageHeader
-        title={category.title}
-        description={category.description}
+        title={catTitle}
+        description={catDesc}
         backHref="/services"
       />
 
       {categoryServices.length === 0 ? (
         <div className="text-center py-16 bg-white rounded-xl border border-slate-200">
-          <p className="text-slate-500 text-lg font-medium">More services coming soon.</p>
-          <p className="text-slate-400 text-sm mt-1">Check back later or explore other categories.</p>
+          <p className="text-slate-500 text-lg font-medium">{trx('More services coming soon.', language)}</p>
+          <p className="text-slate-400 text-sm mt-1">{trx('Check back later or explore other categories.', language)}</p>
         </div>
       ) : (
         <div className="flex flex-col gap-3">

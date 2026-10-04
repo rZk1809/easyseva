@@ -6,6 +6,7 @@ import { PageLayout, PageHeader } from '@/components/layout/PageLayout';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
+import { trx } from '@/lib/translations';
 import type { TextSize, ContrastMode, Language } from '@/lib/types';
 import { Type, Eye, Globe, Activity, CheckCircle2 } from 'lucide-react';
 
@@ -45,8 +46,8 @@ export default function AccessibilityPage() {
               <Type size={18} className="text-gov-600" aria-hidden="true" />
             </div>
             <div>
-              <h2 className="font-bold text-slate-900">Text Size</h2>
-              <p className="text-sm text-slate-500">Choose a text size that is comfortable for you.</p>
+              <h2 className="font-bold text-slate-900">{trx('Text Size', language)}</h2>
+              <p className="text-sm text-slate-500">{trx('Choose a text size that is comfortable for you.', language)}</p>
             </div>
           </div>
           <div className="flex gap-3" role="radiogroup" aria-label="Text size">
@@ -76,7 +77,7 @@ export default function AccessibilityPage() {
                   {size.preview}
                 </span>
                 <span className={cn('text-xs font-medium', accessibility.textSize === size.id ? 'text-gov-700' : 'text-slate-500')}>
-                  {size.label}
+                  {trx(size.label, language)}
                 </span>
                 {accessibility.textSize === size.id && (
                   <CheckCircle2 size={14} className="text-gov-600" aria-hidden="true" />
@@ -93,8 +94,8 @@ export default function AccessibilityPage() {
               <Eye size={18} className="text-slate-600" aria-hidden="true" />
             </div>
             <div>
-              <h2 className="font-bold text-slate-900">Display Contrast</h2>
-              <p className="text-sm text-slate-500">Increase contrast to make text stand out more.</p>
+              <h2 className="font-bold text-slate-900">{trx('Display Contrast', language)}</h2>
+              <p className="text-sm text-slate-500">{trx('Increase contrast to make text stand out more.', language)}</p>
             </div>
           </div>
           <div className="flex gap-3" role="radiogroup" aria-label="Contrast mode">
@@ -122,13 +123,13 @@ export default function AccessibilityPage() {
                   aria-hidden="true"
                 >
                   <div className={cn('px-2 py-1 text-xs font-bold', mode.id === 'default' ? 'text-slate-800' : 'text-white')}>
-                    Sample text
+                    {trx('Sample text', language)}
                   </div>
                 </div>
                 <p className={cn('text-sm font-semibold', accessibility.contrast === mode.id ? 'text-gov-700' : 'text-slate-700')}>
-                  {mode.label}
+                  {trx(mode.label, language)}
                 </p>
-                <p className="text-xs text-slate-500">{mode.description}</p>
+                <p className="text-xs text-slate-500">{trx(mode.description, language)}</p>
               </button>
             ))}
           </div>
@@ -142,8 +143,8 @@ export default function AccessibilityPage() {
                 <Activity size={18} className="text-purple-600" aria-hidden="true" />
               </div>
               <div>
-                <h2 className="font-bold text-slate-900">Reduce Motion</h2>
-                <p className="text-sm text-slate-500">Minimise animations and transitions.</p>
+                <h2 className="font-bold text-slate-900">{trx('Reduce Motion', language)}</h2>
+                <p className="text-sm text-slate-500">{trx('Minimise animations and transitions.', language)}</p>
               </div>
             </div>
             <button
@@ -175,8 +176,8 @@ export default function AccessibilityPage() {
               <Globe size={18} className="text-teal-600" aria-hidden="true" />
             </div>
             <div>
-              <h2 className="font-bold text-slate-900">Language</h2>
-              <p className="text-sm text-slate-500">Choose the language for the interface.</p>
+              <h2 className="font-bold text-slate-900">{trx('Language', language)}</h2>
+              <p className="text-sm text-slate-500">{trx('Choose the language for the interface.', language)}</p>
             </div>
           </div>
           <div className="space-y-2" role="radiogroup" aria-label="Interface language">
@@ -217,7 +218,7 @@ export default function AccessibilityPage() {
               setAccessibility({ textSize: 'default', contrast: 'default', reduceMotion: false });
             }}
           >
-            Reset to defaults
+            {trx('Reset to defaults', language)}
           </Button>
         </div>
       </div>

@@ -8,6 +8,7 @@ import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Alert } from '@/components/ui/Alert';
 import { cn } from '@/lib/utils';
+import { trx } from '@/lib/translations';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import {
@@ -23,7 +24,7 @@ const MENU_ITEMS = [
 ];
 
 export default function ProfilePage() {
-  const { applications } = useApp();
+  const { applications, language } = useApp();
   const { user, logout, refreshUser } = useAuth();
   const router = useRouter();
 
@@ -80,7 +81,7 @@ export default function ProfilePage() {
     }
   };
 
-  const displayName = user?.name ?? user?.email?.split('@')[0] ?? 'Guest User';
+  const displayName = user?.name ?? user?.email?.split('@')[0] ?? trx('Guest User', language);
 
   return (
     <PageLayout maxWidth="md">
@@ -88,7 +89,7 @@ export default function ProfilePage() {
 
       {saveSuccess && (
         <Alert variant="success" className="mb-4">
-          Profile updated successfully.
+          {trx('Profile updated successfully.', language)}
         </Alert>
       )}
 
@@ -102,7 +103,7 @@ export default function ProfilePage() {
           {editing ? (
             <div className="max-w-xs mx-auto space-y-3 mt-2">
               <div>
-                <label className="block text-xs font-semibold text-slate-600 mb-1 text-left">Full Name</label>
+                <label className="block text-xs font-semibold text-slate-600 mb-1 text-left">{trx('Full Name', language)}</label>
                 <input
                   type="text"
                   value={name}
@@ -112,7 +113,7 @@ export default function ProfilePage() {
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-slate-600 mb-1 text-left">Phone Number</label>
+                <label className="block text-xs font-semibold text-slate-600 mb-1 text-left">{trx('Phone Number', language)}</label>
                 <input
                   type="tel"
                   value={phone}
@@ -124,10 +125,10 @@ export default function ProfilePage() {
               {saveError && <p className="text-sm text-red-600">{saveError}</p>}
               <div className="flex gap-2 pt-1">
                 <Button variant="primary" size="md" fullWidth onClick={handleSave} disabled={saving} iconLeft={<Check size={15} />}>
-                  {saving ? 'Saving…' : 'Save'}
+                  {saving ? trx('Saving…', language) : trx('Save', language)}
                 </Button>
                 <Button variant="outline" size="md" fullWidth onClick={handleCancel} iconLeft={<X size={15} />}>
-                  Cancel
+                  {trx('Cancel', language)}
                 </Button>
               </div>
             </div>
@@ -136,7 +137,7 @@ export default function ProfilePage() {
               <p className="font-bold text-slate-900 text-lg">{displayName}</p>
               <div className="flex items-center justify-center gap-1 text-sm text-slate-500 mt-0.5">
                 <Mail size={13} aria-hidden="true" />
-                <span>{user?.email ?? 'Not signed in'}</span>
+                <span>{user?.email ?? trx('Not signed in', language)}</span>
               </div>
               {user?.phone && (
                 <div className="flex items-center justify-center gap-1 text-sm text-slate-500 mt-0.5">
@@ -149,7 +150,7 @@ export default function ProfilePage() {
                   onClick={handleEdit}
                   className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-gov-600 hover:text-gov-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-gov-600 rounded"
                 >
-                  <Edit2 size={12} /> Edit Profile
+                  <Edit2 size={12} /> {trx('Edit Profile', language)}
                 </button>
               )}
             </>
@@ -159,17 +160,17 @@ export default function ProfilePage() {
         <div className="flex justify-center gap-6 mt-4 pt-4 border-t border-slate-100">
           <div className="text-center">
             <p className="text-2xl font-bold text-navy-800">{active}</p>
-            <p className="text-xs text-slate-500 mt-0.5">Active</p>
+            <p className="text-xs text-slate-500 mt-0.5">{trx('Active', language)}</p>
           </div>
           <div className="w-px bg-slate-200" aria-hidden="true" />
           <div className="text-center">
             <p className="text-2xl font-bold text-amber-600">{drafts}</p>
-            <p className="text-xs text-slate-500 mt-0.5">Drafts</p>
+            <p className="text-xs text-slate-500 mt-0.5">{trx('Drafts', language)}</p>
           </div>
           <div className="w-px bg-slate-200" aria-hidden="true" />
           <div className="text-center">
             <p className="text-2xl font-bold text-slate-500">{applications.length}</p>
-            <p className="text-xs text-slate-500 mt-0.5">Total</p>
+            <p className="text-xs text-slate-500 mt-0.5">{trx('Total', language)}</p>
           </div>
         </div>
       </Card>
@@ -190,8 +191,8 @@ export default function ProfilePage() {
               <item.icon size={18} className="text-slate-600" aria-hidden="true" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="font-semibold text-slate-800 text-sm">{item.label}</p>
-              <p className="text-xs text-slate-500">{item.desc}</p>
+              <p className="font-semibold text-slate-800 text-sm">{trx(item.label, language)}</p>
+              <p className="text-xs text-slate-500">{trx(item.desc, language)}</p>
             </div>
             <ChevronRight size={16} className="text-slate-400 shrink-0" aria-hidden="true" />
           </Link>
@@ -203,19 +204,19 @@ export default function ProfilePage() {
           onClick={handleLogout}
           className="w-full flex items-center justify-center gap-2 py-3.5 px-5 rounded-xl border-2 border-red-200 text-red-600 font-semibold hover:bg-red-50 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400 min-h-[52px] mb-5"
         >
-          <LogOut size={18} /> Sign out
+          <LogOut size={18} /> {trx('Sign out', language)}
         </button>
       ) : (
         <Link
           href="/login"
           className="w-full flex items-center justify-center gap-2 py-3.5 px-5 rounded-xl bg-navy-800 text-white font-semibold hover:bg-navy-900 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-navy-700 min-h-[52px] mb-5"
         >
-          <LogIn size={18} /> Sign in
+          <LogIn size={18} /> {trx('Sign in', language)}
         </Link>
       )}
 
       <Alert variant="info">
-        This is an HCI academic prototype for Tamil Nadu government services. Your data is stored securely and used only for this demonstration.
+        {trx('This is an HCI academic prototype for Tamil Nadu government services. Your data is stored securely and used only for this demonstration.', language)}
       </Alert>
     </PageLayout>
   );

@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/Button';
 import { Alert } from '@/components/ui/Alert';
 import { ConfirmDialog } from '@/components/ui/Dialog';
 import { cn, formatFileSize } from '@/lib/utils';
+import { trx } from '@/lib/translations';
 import { Edit2, CheckCircle2, FileCheck, Send, ChevronDown, ChevronUp, Save, Loader2 } from 'lucide-react';
 
 export default function ReviewPage() {
@@ -125,13 +126,13 @@ export default function ReviewPage() {
       />
 
       <Alert variant="warning" className="mb-6">
-        Once submitted, some details may not be editable. Please review everything carefully.
+        {trx('Once submitted, some details may not be editable. Please review everything carefully.', language)}
       </Alert>
 
       {!user && (
         <Alert variant="error" className="mb-6">
-          You must be signed in to submit.{' '}
-          <a href="/login" className="underline font-semibold">Sign in here</a>.
+          {trx('You must be signed in to submit.', language)}{' '}
+          <a href="/login" className="underline font-semibold">{trx('Sign in here', language)}</a>.
         </Alert>
       )}
 
@@ -152,7 +153,7 @@ export default function ReviewPage() {
               >
                 <div className="flex items-center gap-3">
                   <CheckCircle2 size={18} className={hasData ? 'text-green-600' : 'text-slate-300'} aria-hidden="true" />
-                  <span className="font-semibold text-slate-800">{step.title}</span>
+                  <span className="font-semibold text-slate-800">{trx(step.title, language)}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <span
@@ -162,7 +163,7 @@ export default function ReviewPage() {
                     tabIndex={0}
                     onKeyDown={e => e.key === 'Enter' && router.push(`/apply/${serviceId}/form`)}
                   >
-                    <Edit2 size={12} /> Edit
+                    <Edit2 size={12} /> {trx('Edit', language)}
                   </span>
                   {isExpanded ? <ChevronUp size={16} className="text-slate-400" /> : <ChevronDown size={16} className="text-slate-400" />}
                 </div>
@@ -180,7 +181,7 @@ export default function ReviewPage() {
                       : val;
                     return (
                       <div key={field.id} className="flex gap-3 text-sm">
-                        <span className="text-slate-500 shrink-0 w-36">{field.label}:</span>
+                        <span className="text-slate-500 shrink-0 w-36">{trx(field.label, language)}:</span>
                         <span className="font-medium text-slate-900 break-all">{displayVal}</span>
                       </div>
                     );
@@ -199,10 +200,10 @@ export default function ReviewPage() {
           >
             <div className="flex items-center gap-3">
               <FileCheck size={18} className={uploaded.length > 0 ? 'text-green-600' : 'text-slate-300'} aria-hidden="true" />
-              <span className="font-semibold text-slate-800">Documents</span>
+              <span className="font-semibold text-slate-800">{trx('Documents', language)}</span>
             </div>
             <div className="flex items-center gap-3">
-              <span className="text-xs text-slate-500">{uploaded.length} uploaded</span>
+              <span className="text-xs text-slate-500">{uploaded.length} {trx('uploaded', language)}</span>
               {expandedSections['documents'] !== false ? <ChevronUp size={16} className="text-slate-400" /> : <ChevronDown size={16} className="text-slate-400" />}
             </div>
           </button>
@@ -216,15 +217,15 @@ export default function ReviewPage() {
                     {doc ? <CheckCircle2 size={14} className="text-green-600 shrink-0" /> : (
                       <div className={cn('w-3.5 h-3.5 rounded-full border-2 shrink-0', req.required ? 'border-red-400' : 'border-slate-300')} />
                     )}
-                    <span className={cn('flex-1', !doc && 'text-slate-400')}>{req.name}</span>
+                    <span className={cn('flex-1', !doc && 'text-slate-400')}>{language === 'ta' ? req.nameTa : language === 'hi' ? req.nameHi : req.name}</span>
                     {doc && <span className="text-slate-500 text-xs">{formatFileSize(doc.sizeKB)}</span>}
-                    {!doc && req.required && <span className="text-xs text-red-500">Not uploaded</span>}
-                    {!doc && !req.required && <span className="text-xs text-slate-400">Optional</span>}
+                    {!doc && req.required && <span className="text-xs text-red-500">{trx('Not uploaded', language)}</span>}
+                    {!doc && !req.required && <span className="text-xs text-slate-400">{trx('Optional', language)}</span>}
                   </div>
                 );
               })}
               <a href={`/apply/${serviceId}/documents`} className="text-xs font-semibold text-gov-600 flex items-center gap-1 mt-2 hover:text-gov-800">
-                <Edit2 size={11} /> Manage Documents
+                <Edit2 size={11} /> {trx('Manage Documents', language)}
               </a>
             </div>
           )}
@@ -233,7 +234,7 @@ export default function ReviewPage() {
 
       <Card shadow="md" className="border-navy-200 bg-navy-50/40">
         <p className="text-sm text-slate-700 mb-4 leading-relaxed">
-          By submitting this application, you confirm that all information provided is accurate to the best of your knowledge.
+          {trx('By submitting this application, you confirm that all information provided is accurate to the best of your knowledge.', language)}
         </p>
         <Button
           variant="primary"
@@ -243,7 +244,7 @@ export default function ReviewPage() {
           onClick={() => setConfirmOpen(true)}
           disabled={!user || submitting}
         >
-          {submitting ? 'Submitting…' : 'Submit Application'}
+          {submitting ? trx('Submitting…', language) : trx('Submit Application', language)}
         </Button>
         <Button
           variant="ghost"
@@ -254,7 +255,7 @@ export default function ReviewPage() {
           onClick={handleSaveDraft}
           disabled={savingDraft}
         >
-          {savingDraft ? 'Saving…' : 'Save & Finish Later'}
+          {savingDraft ? trx('Saving…', language) : trx('Save & Finish Later', language)}
         </Button>
       </Card>
 
@@ -262,10 +263,10 @@ export default function ReviewPage() {
         open={confirmOpen}
         onClose={() => setConfirmOpen(false)}
         onConfirm={handleSubmit}
-        title="Submit your application?"
-        message="You are about to submit your application. Once submitted, you will receive a reference number. You cannot undo this action."
-        confirmLabel={submitting ? 'Submitting…' : 'Yes, Submit Now'}
-        cancelLabel="Not Yet"
+        title={trx('Submit your application?', language)}
+        message={trx('You are about to submit your application. Once submitted, you will receive a reference number. You cannot undo this action.', language)}
+        confirmLabel={submitting ? trx('Submitting…', language) : trx('Yes, Submit Now', language)}
+        cancelLabel={trx('Not Yet', language)}
       />
     </PageLayout>
   );

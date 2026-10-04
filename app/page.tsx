@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useApp } from '@/context/AppContext';
-import { tr } from '@/lib/translations';
+import { tr, trx } from '@/lib/translations';
 import { cn } from '@/lib/utils';
 import { ArrowRight, Shield, Clock, Globe, CheckCircle2, Sparkles } from 'lucide-react';
 
@@ -42,7 +42,7 @@ export default function LandingPage() {
           <div className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-sm font-medium mb-8">
               <Sparkles size={14} aria-hidden="true" />
-              HCI Academic Prototype · Tamil Nadu
+              {trx('HCI Academic Prototype · Tamil Nadu', language)}
             </div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight mb-6">
               {tr('landing.hero', language)}
@@ -115,7 +115,7 @@ export default function LandingPage() {
               {TRUST_ITEMS.map(({ icon: Icon, text }) => (
                 <li key={text} className="flex items-center gap-2 text-sm text-white/70">
                   <Icon size={16} className="text-teal-400" aria-hidden="true" />
-                  {text}
+                  {trx(text, language)}
                 </li>
               ))}
             </ul>
@@ -127,10 +127,10 @@ export default function LandingPage() {
       <section className="max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-20" aria-labelledby="features-heading">
         <div className="text-center mb-12">
           <h2 id="features-heading" className="text-2xl sm:text-3xl font-bold text-slate-900 mb-3">
-            Designed for real people
+            {trx('Designed for real people', language)}
           </h2>
           <p className="text-slate-600 max-w-xl mx-auto text-base">
-            EasySeva is built around how citizens think about services, not how departments are organised.
+            {trx('EasySeva is built around how citizens think about services, not how departments are organised.', language)}
           </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -140,8 +140,8 @@ export default function LandingPage() {
                 <span className="text-gov-700 font-bold text-sm" aria-hidden="true">{i + 1}</span>
               </div>
               <div>
-                <h3 className="font-semibold text-slate-900 mb-1">{f.title}</h3>
-                <p className="text-sm text-slate-500 leading-relaxed">{f.desc}</p>
+                <h3 className="font-semibold text-slate-900 mb-1">{trx(f.title, language)}</h3>
+                <p className="text-sm text-slate-500 leading-relaxed">{trx(f.desc, language)}</p>
               </div>
             </div>
           ))}
@@ -152,9 +152,9 @@ export default function LandingPage() {
       <section className="bg-teal-700 text-white" aria-labelledby="demo-heading">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-16 text-center">
           <Sparkles className="mx-auto mb-4 text-teal-200" size={28} aria-hidden="true" />
-          <h2 id="demo-heading" className="text-2xl sm:text-3xl font-bold mb-3">Try the demo experience</h2>
+          <h2 id="demo-heading" className="text-2xl sm:text-3xl font-bold mb-3">{trx('Try the demo experience', language)}</h2>
           <p className="text-teal-100 mb-8 text-base max-w-lg mx-auto">
-            Walk through applying for an Income Certificate as Lakshmi, a first-time user who needs step-by-step guidance.
+            {trx('Walk through applying for an Income Certificate as Lakshmi, a first-time user who needs step-by-step guidance.', language)}
           </p>
           <Link
             href="/home"
@@ -165,7 +165,7 @@ export default function LandingPage() {
               'focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-teal-700'
             )}
           >
-            Explore EasySeva
+            {trx('Explore EasySeva', language)}
             <ArrowRight size={18} aria-hidden="true" />
           </Link>
         </div>
@@ -173,7 +173,7 @@ export default function LandingPage() {
 
       {/* Disclaimer */}
       <div className="bg-amber-50 border-t border-amber-200 px-4 py-3 text-center text-xs text-amber-800" role="note">
-        <strong>Academic Prototype:</strong> This is a demonstration application for an HCI research project. Do not enter real personal information. All application submissions are simulated.
+        <strong>{trx('Academic Prototype:', language)}</strong> {trx('This is a demonstration application for an HCI research project. Do not enter real personal information. All application submissions are simulated.', language)}
       </div>
     </main>
   );

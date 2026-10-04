@@ -6,11 +6,14 @@ import Link from 'next/link';
 import { Loader2, ArrowLeft, KeyRound, RefreshCw, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/context/AuthContext';
+import { useApp } from '@/context/AppContext';
+import { trx } from '@/lib/translations';
 
 function VerifyContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { refreshUser } = useAuth();
+  const { language } = useApp();
 
   const email = searchParams.get('email') ?? '';
   const demoOtp = searchParams.get('demo') ?? '';
@@ -113,8 +116,8 @@ function VerifyContent() {
   if (!email) {
     return (
       <div className="text-center">
-        <p className="text-slate-500 mb-4">No email provided.</p>
-        <Link href="/login" className="text-navy-700 font-semibold hover:underline">Go back to login</Link>
+        <p className="text-slate-500 mb-4">{trx('No email provided.', language)}</p>
+        <Link href="/login" className="text-navy-700 font-semibold hover:underline">{trx('Go back to login', language)}</Link>
       </div>
     );
   }
@@ -129,11 +132,11 @@ function VerifyContent() {
           {success ? <CheckCircle2 size={32} className="text-white" /> : <KeyRound size={32} className="text-white" />}
         </div>
         <h1 className="text-2xl font-bold text-navy-900">
-          {success ? 'Verified!' : 'Enter your OTP'}
+          {success ? trx('Verified!', language) : trx('Enter your OTP', language)}
         </h1>
         <p className="text-slate-500 mt-1 text-sm">
-          {success ? 'Redirecting you to the dashboard…' : (
-            <>We sent a 6-digit code to <strong>{email}</strong></>
+          {success ? trx('Redirecting you to the dashboard…', language) : (
+            <>{trx('We sent a 6-digit code to', language)} <strong>{email}</strong></>
           )}
         </p>
       </div>
@@ -142,9 +145,9 @@ function VerifyContent() {
         {/* Demo OTP banner */}
         {demoOtp && !success && (
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 mb-5 text-center">
-            <p className="text-xs font-semibold text-amber-700 mb-1">Demo Mode — Your OTP</p>
+            <p className="text-xs font-semibold text-amber-700 mb-1">{trx('Demo Mode — Your OTP', language)}</p>
             <p className="text-2xl font-black tracking-[0.5em] text-amber-900 font-mono">{demoOtp}</p>
-            <p className="text-xs text-amber-600 mt-1">This is shown here because email is not configured.</p>
+            <p className="text-xs text-amber-600 mt-1">{trx('This is shown here because email is not configured.', language)}</p>
           </div>
         )}
 
@@ -188,11 +191,11 @@ function VerifyContent() {
           )}
         >
           {loading ? (
-            <><Loader2 size={16} className="animate-spin" /> Verifying…</>
+            <><Loader2 size={16} className="animate-spin" /> {trx('Verifying…', language)}</>
           ) : success ? (
-            <><CheckCircle2 size={16} /> Verified</>
+            <><CheckCircle2 size={16} /> {trx('Verified!', language)}</>
           ) : (
-            'Verify & Sign In'
+            trx('Verify & Sign In', language)
           )}
         </button>
 
@@ -201,7 +204,7 @@ function VerifyContent() {
             href="/login"
             className="flex items-center gap-1 text-xs text-slate-500 hover:text-slate-700 font-medium"
           >
-            <ArrowLeft size={13} /> Back
+            <ArrowLeft size={13} /> {trx('Back', language)}
           </Link>
           <button
             onClick={handleResend}
@@ -209,7 +212,7 @@ function VerifyContent() {
             className="flex items-center gap-1 text-xs text-gov-600 hover:text-gov-700 font-medium disabled:opacity-50"
           >
             <RefreshCw size={13} className={resending ? 'animate-spin' : ''} />
-            {resendCooldown > 0 ? `Resend in ${resendCooldown}s` : resending ? 'Sending…' : 'Resend OTP'}
+            {resendCooldown > 0 ? `${trx('Resend OTP', language)} (${resendCooldown}s)` : resending ? trx('Sending OTP…', language) : trx('Resend OTP', language)}
           </button>
         </div>
       </div>

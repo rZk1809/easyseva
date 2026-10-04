@@ -6,6 +6,7 @@ import { useApp } from '@/context/AppContext';
 import { PageLayout, PageHeader } from '@/components/layout/PageLayout';
 import { Button } from '@/components/ui/Button';
 import { cn, formatRelative } from '@/lib/utils';
+import { trx } from '@/lib/translations';
 import { Bell, CheckCircle2, AlertTriangle, Info, ArrowRight } from 'lucide-react';
 import type { Notification } from '@/lib/types';
 
@@ -24,7 +25,7 @@ const COLORS = {
 };
 
 export default function NotificationsPage() {
-  const { notifications, markNotificationRead, markAllRead, unreadCount } = useApp();
+  const { notifications, markNotificationRead, markAllRead, unreadCount, language } = useApp();
 
   return (
     <PageLayout maxWidth="md">
@@ -35,7 +36,7 @@ export default function NotificationsPage() {
         actions={
           unreadCount > 0 ? (
             <Button variant="ghost" size="sm" onClick={markAllRead}>
-              Mark all as read
+              {trx('Mark all as read', language)}
             </Button>
           ) : undefined
         }
@@ -44,8 +45,8 @@ export default function NotificationsPage() {
       {notifications.length === 0 ? (
         <div className="text-center py-16 bg-white rounded-xl border border-slate-200">
           <Bell size={32} className="text-slate-300 mx-auto mb-3" aria-hidden="true" />
-          <p className="font-semibold text-slate-700">No notifications yet</p>
-          <p className="text-sm text-slate-500 mt-1">Application updates will appear here.</p>
+          <p className="font-semibold text-slate-700">{trx('No notifications yet', language)}</p>
+          <p className="text-sm text-slate-500 mt-1">{trx('Application updates will appear here.', language)}</p>
         </div>
       ) : (
         <div className="space-y-3">
@@ -54,6 +55,7 @@ export default function NotificationsPage() {
               key={notif.id}
               notification={notif}
               onRead={() => markNotificationRead(notif.id)}
+              language={language}
             />
           ))}
         </div>
@@ -62,7 +64,7 @@ export default function NotificationsPage() {
   );
 }
 
-function NotificationItem({ notification, onRead }: { notification: Notification; onRead: () => void }) {
+function NotificationItem({ notification, onRead, language }: { notification: Notification; onRead: () => void; language: import('@/lib/types').Language }) {
   const Icon = ICONS[notification.type];
   const colorClass = COLORS[notification.type];
 
@@ -105,7 +107,7 @@ function NotificationItem({ notification, onRead }: { notification: Notification
             className="inline-flex items-center gap-1 text-xs font-semibold text-gov-600 hover:text-gov-800 mt-2"
             onClick={onRead}
           >
-            View application <ArrowRight size={11} />
+            {trx('View application', language)} <ArrowRight size={11} />
           </Link>
         )}
       </div>

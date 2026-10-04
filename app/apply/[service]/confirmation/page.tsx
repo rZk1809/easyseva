@@ -10,6 +10,7 @@ import { Card } from '@/components/ui/Card';
 import { Alert } from '@/components/ui/Alert';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { cn } from '@/lib/utils';
+import { trx } from '@/lib/translations';
 import { CheckCircle2, ArrowRight, Home, Download, Copy, ClipboardCheck } from 'lucide-react';
 
 const NEXT_STEPS = [
@@ -43,13 +44,13 @@ function ConfirmationContent({ serviceId }: { serviceId: string }) {
         <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-5" aria-hidden="true">
           <CheckCircle2 size={40} className="text-green-600" />
         </div>
-        <h1 className="text-2xl font-bold text-slate-900 mb-2">Application Submitted!</h1>
+        <h1 className="text-2xl font-bold text-slate-900 mb-2">{trx('Application Submitted!', language)}</h1>
         <p className="text-slate-600 mb-6">
-          Your application for <strong>{title}</strong> has been successfully submitted.
+          {trx('Your application for', language)} <strong>{title}</strong> {trx('has been successfully submitted.', language)}
         </p>
 
         <div className="bg-white border-2 border-green-300 rounded-xl p-4 inline-flex flex-col items-center gap-2 mx-auto mb-2">
-          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Your Reference Number</p>
+          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">{trx('Your Reference Number', language)}</p>
           <p className="text-2xl font-black text-navy-800 tracking-wide font-mono">{refNum}</p>
           <button
             onClick={handleCopy}
@@ -59,20 +60,20 @@ function ConfirmationContent({ serviceId }: { serviceId: string }) {
             )}
             aria-label="Copy reference number"
           >
-            {copied ? <><ClipboardCheck size={13} /> Copied!</> : <><Copy size={13} /> Copy number</>}
+            {copied ? <><ClipboardCheck size={13} /> {trx('Copied!', language)}</> : <><Copy size={13} /> {trx('Copy number', language)}</>}
           </button>
         </div>
         <p className="text-xs text-slate-500">
-          Save this number to track your application. You&apos;ll receive SMS updates on your registered mobile number.
+          {trx("Save this number to track your application. You'll receive SMS updates on your registered mobile number.", language)}
         </p>
       </Card>
 
       <Alert variant="info" className="mb-6" role="status">
-        <strong>No action required from you right now.</strong> We will contact you if anything is needed. Track your application anytime with your reference number.
+        <strong>{trx('No action required from you right now.', language)}</strong> {trx('We will contact you if anything is needed. Track your application anytime with your reference number.', language)}
       </Alert>
 
       <Card className="mb-6">
-        <h2 className="font-bold text-slate-900 mb-4">What happens next?</h2>
+        <h2 className="font-bold text-slate-900 mb-4">{trx('What happens next?', language)}</h2>
         <ol className="space-y-4">
           {NEXT_STEPS.map(s => (
             <li key={s.step} className="flex items-start gap-3">
@@ -86,8 +87,8 @@ function ConfirmationContent({ serviceId }: { serviceId: string }) {
                 {s.done ? <CheckCircle2 size={15} /> : s.step}
               </div>
               <div>
-                <p className={cn('text-sm font-semibold', s.done ? 'text-green-800' : 'text-slate-700')}>{s.title}</p>
-                <p className="text-sm text-slate-500">{s.desc}</p>
+                <p className={cn('text-sm font-semibold', s.done ? 'text-green-800' : 'text-slate-700')}>{trx(s.title, language)}</p>
+                <p className="text-sm text-slate-500">{trx(s.desc, language)}</p>
               </div>
             </li>
           ))}
@@ -105,7 +106,7 @@ function ConfirmationContent({ serviceId }: { serviceId: string }) {
             'min-h-[52px]'
           )}
         >
-          Track My Application
+          {trx('Track My Application', language)}
           <ArrowRight size={18} aria-hidden="true" />
         </Link>
 
@@ -120,7 +121,7 @@ function ConfirmationContent({ serviceId }: { serviceId: string }) {
           onClick={() => window.print()}
         >
           <Download size={16} aria-hidden="true" />
-          Download Acknowledgement
+          {trx('Download Acknowledgement', language)}
         </button>
 
         <Link
@@ -133,12 +134,12 @@ function ConfirmationContent({ serviceId }: { serviceId: string }) {
           )}
         >
           <Home size={16} aria-hidden="true" />
-          Return to Home
+          {trx('Return to Home', language)}
         </Link>
       </div>
 
       <p className="text-xs text-center text-slate-400 mt-6">
-        Your application is recorded. Keep your reference number safe — you&apos;ll need it to track your application.
+        {trx('Your application is recorded. Keep your reference number safe, you will need it to track your application.', language)}
       </p>
     </>
   );

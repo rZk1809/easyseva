@@ -11,6 +11,7 @@ import { Alert } from '@/components/ui/Alert';
 import { ProgressBar } from '@/components/ui/Progress';
 import { cn } from '@/lib/utils';
 import { CheckCircle2, XCircle, HelpCircle, ChevronDown, ChevronUp, ArrowRight } from 'lucide-react';
+import { trx } from '@/lib/translations';
 import type { EligibilityQuestion } from '@/lib/types';
 
 interface AnswerState {
@@ -84,12 +85,12 @@ export default function EligibilityPage() {
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <CheckCircle2 size={32} className="text-green-600" aria-hidden="true" />
               </div>
-              <h2 className="text-xl font-bold text-slate-900 mb-2">You appear to be eligible</h2>
+              <h2 className="text-xl font-bold text-slate-900 mb-2">{trx('You appear to be eligible', language)}</h2>
               <p className="text-slate-600 mb-2">
-                Based on the information you provided, you may be eligible for this service.
+                {trx('Based on the information you provided, you may be eligible for this service.', language)}
               </p>
               <p className="text-sm text-slate-500 mb-8">
-                Your actual eligibility will be assessed by a government officer after submission.
+                {trx('Your actual eligibility will be assessed by a government officer after submission.', language)}
               </p>
               <Button
                 variant="primary"
@@ -98,13 +99,13 @@ export default function EligibilityPage() {
                 iconRight={<ArrowRight size={18} />}
                 onClick={() => router.push(`/apply/${serviceId}/documents`)}
               >
-                Continue to Documents
+                {trx('Continue to Documents', language)}
               </Button>
               <button
                 onClick={() => router.push(`/apply/${serviceId}/form`)}
                 className="mt-3 text-sm text-slate-500 hover:text-slate-700 underline"
               >
-                Skip document check and go directly to form
+                {trx('Skip document check and go directly to form', language)}
               </button>
             </>
           ) : (
@@ -112,12 +113,12 @@ export default function EligibilityPage() {
               <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <XCircle size={32} className="text-red-600" aria-hidden="true" />
               </div>
-              <h2 className="text-xl font-bold text-slate-900 mb-2">You may not be eligible</h2>
+              <h2 className="text-xl font-bold text-slate-900 mb-2">{trx('You may not be eligible', language)}</h2>
               {ineligibleOption?.explanation && (
                 <p className="text-slate-600 mb-6">{ineligibleOption.explanation}</p>
               )}
               <Alert variant="warning" className="text-left mb-6">
-                If you believe this is incorrect, you can still continue with your application and a government officer will make the final decision.
+                {trx('If you believe this is incorrect, you can still continue with your application and a government officer will make the final decision.', language)}
               </Alert>
               <div className="flex flex-col gap-3">
                 <Button
@@ -126,7 +127,7 @@ export default function EligibilityPage() {
                   fullWidth
                   onClick={() => router.push(`/apply/${serviceId}/form`)}
                 >
-                  Continue Anyway
+                  {trx('Continue Anyway', language)}
                 </Button>
                 <Button
                   variant="ghost"
@@ -134,7 +135,7 @@ export default function EligibilityPage() {
                   fullWidth
                   onClick={() => router.push('/find-service')}
                 >
-                  Help me find a different service
+                  {trx('Help me find a different service', language)}
                 </Button>
               </div>
             </>
@@ -156,7 +157,7 @@ export default function EligibilityPage() {
       <ProgressBar
         value={currentQ}
         max={questions.length}
-        label={`Question ${currentQ + 1} of ${questions.length}`}
+        label={`${trx('Question', language)} ${currentQ + 1} ${trx('of', language)} ${questions.length}`}
         showPercent={false}
         className="mb-6"
       />
@@ -164,7 +165,7 @@ export default function EligibilityPage() {
       {currentQuestion && (
         <Card shadow="md" className="animate-fade-in-up">
           <p className="text-xs font-semibold text-gov-600 uppercase tracking-wider mb-3">
-            Question {currentQ + 1} of {questions.length}
+            {trx('Question', language)} {currentQ + 1} {trx('of', language)} {questions.length}
           </p>
           <h2 className="text-xl font-bold text-slate-900 mb-6 leading-snug">
             {language === 'ta' ? currentQuestion.questionTa :
@@ -181,7 +182,7 @@ export default function EligibilityPage() {
                 aria-expanded={expandedHint === currentQuestion.id}
               >
                 <HelpCircle size={15} />
-                Why are we asking this?
+                {trx('Why are we asking this?', language)}
                 {expandedHint === currentQuestion.id ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
               </button>
               {expandedHint === currentQuestion.id && (
@@ -258,7 +259,7 @@ export default function EligibilityPage() {
               fullWidth
               iconRight={<ArrowRight size={16} />}
             >
-              {currentQ < questions.length - 1 ? 'Next Question' : 'See Result'}
+              {currentQ < questions.length - 1 ? trx('Next Question', language) : trx('See Result', language)}
             </Button>
           </div>
         </Card>

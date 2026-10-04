@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Alert } from '@/components/ui/Alert';
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
+import { trx } from '@/lib/translations';
 import { cn } from '@/lib/utils';
 import {
   Clock,
@@ -71,14 +72,14 @@ export default function ServiceDetailPage() {
         <div className="lg:col-span-2 space-y-6">
           {/* What is it */}
           <Card>
-            <h2 className="text-base font-bold text-slate-900 mb-2">What is this service?</h2>
+            <h2 className="text-base font-bold text-slate-900 mb-2">{trx('What is this service?', language)}</h2>
             <p className="text-slate-600 leading-relaxed">{service.fullDescription}</p>
 
             {service.whatYouGet && (
               <div className="mt-4 flex items-start gap-3 bg-teal-50 border border-teal-200 rounded-xl p-3">
                 <Award size={18} className="text-teal-700 shrink-0 mt-0.5" aria-hidden="true" />
                 <div>
-                  <p className="text-xs font-semibold text-teal-800 uppercase tracking-wide">What you&apos;ll get</p>
+                  <p className="text-xs font-semibold text-teal-800 uppercase tracking-wide">{trx("What you'll get", language)}</p>
                   <p className="text-sm text-teal-900 mt-0.5 leading-relaxed">{service.whatYouGet}</p>
                 </div>
               </div>
@@ -86,7 +87,7 @@ export default function ServiceDetailPage() {
 
             {service.usedFor.length > 0 && (
               <div className="mt-4">
-                <p className="text-sm font-semibold text-slate-700 mb-2">You may need this for:</p>
+                <p className="text-sm font-semibold text-slate-700 mb-2">{trx('You may need this for:', language)}</p>
                 <ul className="space-y-1.5">
                   {service.usedFor.map((use, i) => (
                     <li key={i} className="flex items-start gap-2 text-sm text-slate-600">
@@ -103,10 +104,10 @@ export default function ServiceDetailPage() {
           <Card>
             <div className="flex items-center gap-2 mb-3">
               <FileText size={18} className="text-gov-600" aria-hidden="true" />
-              <h2 className="text-base font-bold text-slate-900">Documents you will need</h2>
+              <h2 className="text-base font-bold text-slate-900">{trx('Documents you will need', language)}</h2>
             </div>
             <p className="text-sm text-slate-500 mb-4">
-              Collect these before you start. It will make the process much faster.
+              {trx('Collect these before you start. It will make the process much faster.', language)}
             </p>
             <div className="space-y-3">
               {docsToShow.map((doc, i) => (
@@ -132,9 +133,9 @@ export default function ServiceDetailPage() {
                 aria-expanded={showAllDocs}
               >
                 {showAllDocs ? (
-                  <><ChevronUp size={15} /> Show fewer</>
+                  <><ChevronUp size={15} /> {trx('Show fewer', language)}</>
                 ) : (
-                  <><ChevronDown size={15} /> See all {service.documents.length} documents</>
+                  <><ChevronDown size={15} /> {trx('See all {n} documents', language).replace('{n}', String(service.documents.length))}</>
                 )}
               </button>
             )}
@@ -144,7 +145,7 @@ export default function ServiceDetailPage() {
           <Card>
             <div className="flex items-center gap-2 mb-3">
               <List size={18} className="text-gov-600" aria-hidden="true" />
-              <h2 className="text-base font-bold text-slate-900">How it works</h2>
+              <h2 className="text-base font-bold text-slate-900">{trx('How it works', language)}</h2>
             </div>
             <ol className="space-y-2">
               {service.formSteps.map((step, i) => (
@@ -163,8 +164,8 @@ export default function ServiceDetailPage() {
                   {service.formSteps.length + 1}
                 </span>
                 <div>
-                  <p className="text-sm font-semibold text-slate-800">Review & Submit</p>
-                  <p className="text-xs text-slate-500">Check your information before sending.</p>
+                  <p className="text-sm font-semibold text-slate-800">{trx('Review & Submit', language)}</p>
+                  <p className="text-xs text-slate-500">{trx('Check your information before sending.', language)}</p>
                 </div>
               </li>
             </ol>
@@ -175,7 +176,7 @@ export default function ServiceDetailPage() {
             <Card>
               <div className="flex items-center gap-2 mb-3">
                 <HelpCircle size={18} className="text-gov-600" aria-hidden="true" />
-                <h2 className="text-base font-bold text-slate-900">Frequently asked questions</h2>
+                <h2 className="text-base font-bold text-slate-900">{trx('Frequently asked questions', language)}</h2>
               </div>
               <div className="divide-y divide-slate-100">
                 {service.faqs.map((faq, i) => (
@@ -194,7 +195,7 @@ export default function ServiceDetailPage() {
           {/* Related services */}
           {service.relatedServiceIds && service.relatedServiceIds.length > 0 && (
             <Card>
-              <h2 className="text-base font-bold text-slate-900 mb-3">Related services</h2>
+              <h2 className="text-base font-bold text-slate-900 mb-3">{trx('Related services', language)}</h2>
               <div className="space-y-2">
                 {service.relatedServiceIds
                   .map(id => services.find(s => s.id === id))
@@ -220,26 +221,26 @@ export default function ServiceDetailPage() {
         <aside className="space-y-4">
           {/* Quick info */}
           <Card className="bg-navy-800 text-white border-0">
-            <h3 className="font-bold mb-4">Quick Information</h3>
+            <h3 className="font-bold mb-4">{trx('Quick Information', language)}</h3>
             <div className="space-y-3">
               <div className="flex items-center gap-3">
                 <Clock size={18} className="text-teal-300 shrink-0" aria-hidden="true" />
                 <div>
-                  <p className="text-xs text-white/60">Estimated time</p>
+                  <p className="text-xs text-white/60">{trx('Estimated time', language)}</p>
                   <p className="text-sm font-semibold">~{service.estimatedMinutes} minutes</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <FileText size={18} className="text-teal-300 shrink-0" aria-hidden="true" />
                 <div>
-                  <p className="text-xs text-white/60">Documents needed</p>
+                  <p className="text-xs text-white/60">{trx('Documents needed', language)}</p>
                   <p className="text-sm font-semibold">{service.documents.length} documents</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <IndianRupee size={18} className="text-teal-300 shrink-0" aria-hidden="true" />
                 <div>
-                  <p className="text-xs text-white/60">Application fee</p>
+                  <p className="text-xs text-white/60">{trx('Application fee', language)}</p>
                   <p className="text-sm font-semibold">{service.fee}</p>
                 </div>
               </div>
@@ -247,7 +248,7 @@ export default function ServiceDetailPage() {
                 <div className="flex items-center gap-3">
                   <CalendarDays size={18} className="text-teal-300 shrink-0" aria-hidden="true" />
                   <div>
-                    <p className="text-xs text-white/60">Processing time</p>
+                    <p className="text-xs text-white/60">{trx('Processing time', language)}</p>
                     <p className="text-sm font-semibold">{service.processingTime}</p>
                   </div>
                 </div>
@@ -256,7 +257,7 @@ export default function ServiceDetailPage() {
                 <div className="flex items-start gap-3">
                   <Building2 size={18} className="text-teal-300 shrink-0 mt-0.5" aria-hidden="true" />
                   <div>
-                    <p className="text-xs text-white/60">Issued by</p>
+                    <p className="text-xs text-white/60">{trx('Issued by', language)}</p>
                     <p className="text-sm font-semibold leading-snug">{service.department}</p>
                   </div>
                 </div>
@@ -265,7 +266,7 @@ export default function ServiceDetailPage() {
                 <div className="flex items-start gap-3">
                   <Phone size={18} className="text-teal-300 shrink-0 mt-0.5" aria-hidden="true" />
                   <div>
-                    <p className="text-xs text-white/60">Helpline</p>
+                    <p className="text-xs text-white/60">{trx('Helpline', language)}</p>
                     <p className="text-sm font-semibold leading-snug">{service.helpline}</p>
                   </div>
                 </div>
@@ -276,7 +277,7 @@ export default function ServiceDetailPage() {
           {/* CTA */}
           <Card shadow="md" border className="border-gov-200 bg-gov-50">
             <p className="text-sm text-slate-700 mb-4 leading-relaxed">
-              Ready to begin? We&apos;ll guide you through every step and check your eligibility first.
+              {trx("Ready to begin? We'll guide you through every step and check your eligibility first.", language)}
             </p>
             <Link
               href={`/apply/${service.id}/eligibility`}
@@ -288,15 +289,15 @@ export default function ServiceDetailPage() {
                 'min-h-[52px]'
               )}
             >
-              Start Application <ArrowRight size={18} aria-hidden="true" />
+              {trx('Start Application', language)} <ArrowRight size={18} aria-hidden="true" />
             </Link>
             <p className="text-xs text-slate-500 text-center mt-3">
-              You can save and continue later.
+              {trx('You can save and continue later.', language)}
             </p>
           </Card>
 
           <Alert variant="info">
-            <strong>This is a demo.</strong> No real application will be submitted. Use test data only.
+            <strong>{trx('This is a demo.', language)}</strong> {trx('No real application will be submitted. Use test data only.', language)}
           </Alert>
         </aside>
       </div>

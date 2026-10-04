@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useApp } from '@/context/AppContext';
+import { trx } from '@/lib/translations';
 import { services } from '@/lib/mockData';
 import { PageLayout, PageHeader } from '@/components/layout/PageLayout';
 import { Card } from '@/components/ui/Card';
@@ -166,21 +167,21 @@ export default function FindServicePage() {
         value={progress}
         size="sm"
         className="mb-6"
-        label={`Step ${history.length} of 3`}
+        label={`${trx('Step', language)} ${history.length} ${trx('of', language)} 3`}
       />
 
       {/* Results */}
       {resultServiceIds && resultServices.length > 0 && (
         <div className="animate-fade-in-up space-y-4">
           <Alert variant="success" role="status">
-            Based on your answers, these services may be right for you.
+            {trx('Based on your answers, these services may be right for you.', language)}
           </Alert>
 
           {resultServices.map(service => (
             <Card key={service.id} shadow="md" className="border-gov-200">
               <div className="mb-3">
-                <h3 className="text-lg font-bold text-slate-900">{service.title}</h3>
-                <p className="text-slate-600 mt-1">{service.shortDescription}</p>
+                <h3 className="text-lg font-bold text-slate-900">{language === 'ta' ? service.titleTa : language === 'hi' ? service.titleHi : service.title}</h3>
+                <p className="text-slate-600 mt-1">{language === 'ta' ? service.shortDescriptionTa : language === 'hi' ? service.shortDescriptionHi : service.shortDescription}</p>
               </div>
 
               <div className="flex flex-wrap gap-3 text-sm text-slate-500 mb-4">
@@ -199,7 +200,7 @@ export default function FindServicePage() {
                     'focus:outline-none focus-visible:ring-2 focus-visible:ring-navy-700 focus-visible:ring-offset-2'
                   )}
                 >
-                  Apply Now <ArrowRight size={16} />
+                  {trx('Apply Now', language)} <ArrowRight size={16} />
                 </Link>
                 <Link
                   href={`/services/${service.categoryId}/${service.id}`}
@@ -209,14 +210,14 @@ export default function FindServicePage() {
                     'focus:outline-none focus-visible:ring-2 focus-visible:ring-gov-600'
                   )}
                 >
-                  Learn More <ChevronRight size={14} />
+                  {trx('Learn More', language)} <ChevronRight size={14} />
                 </Link>
               </div>
             </Card>
           ))}
 
           <p className="text-xs text-slate-400 text-center">
-            These suggestions are based on your answers and are not official eligibility decisions.
+            {trx('These suggestions are based on your answers and are not official eligibility decisions.', language)}
           </p>
 
           <div className="flex justify-center pt-2">
@@ -226,7 +227,7 @@ export default function FindServicePage() {
               iconLeft={<RefreshCw size={14} />}
               onClick={handleReset}
             >
-              Start over with different answers
+              {trx('Start over with different answers', language)}
             </Button>
           </div>
         </div>
@@ -238,12 +239,12 @@ export default function FindServicePage() {
           <div className="flex items-center gap-2 mb-3">
             <HelpCircle size={18} className="text-gov-600" aria-hidden="true" />
             <span className="text-xs font-semibold text-gov-600 uppercase tracking-wider">
-              Question {history.length}
+              {trx('Question', language)} {history.length}
             </span>
           </div>
-          <h2 className="text-xl font-bold text-slate-900 mb-6">{currentQuestion.text}</h2>
+          <h2 className="text-xl font-bold text-slate-900 mb-6">{trx(currentQuestion.text, language)}</h2>
 
-          <div className="space-y-3" role="group" aria-label={currentQuestion.text}>
+          <div className="space-y-3" role="group" aria-label={trx(currentQuestion.text, language)}>
             {currentQuestion.options.map(option => (
               <button
                 key={option.value}
@@ -256,7 +257,7 @@ export default function FindServicePage() {
                 )}
               >
                 <span className="text-2xl shrink-0" aria-hidden="true">{option.emoji}</span>
-                <span className="font-medium text-slate-800 flex-1">{option.label}</span>
+                <span className="font-medium text-slate-800 flex-1">{trx(option.label, language)}</span>
                 <ChevronRight size={16} className="text-slate-400 shrink-0" aria-hidden="true" />
               </button>
             ))}
@@ -267,7 +268,7 @@ export default function FindServicePage() {
               onClick={handleBack}
               className="mt-4 text-sm font-medium text-slate-500 hover:text-slate-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-gov-600 rounded px-1"
             >
-              ← Go back
+              ← {trx('Go back', language)}
             </button>
           )}
         </Card>

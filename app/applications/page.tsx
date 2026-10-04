@@ -8,6 +8,7 @@ import { PageLayout, PageHeader } from '@/components/layout/PageLayout';
 import { ApplicationCard } from '@/components/features/ApplicationCard';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { cn } from '@/lib/utils';
+import { trx } from '@/lib/translations';
 import { FileText, ArrowRight, Search, X } from 'lucide-react';
 
 type Tab = 'active' | 'drafts' | 'completed';
@@ -19,7 +20,7 @@ const TABS: { id: Tab; label: string }[] = [
 ];
 
 export default function ApplicationsPage() {
-  const { applications } = useApp();
+  const { applications, language } = useApp();
   const { user, loading: authLoading } = useAuth();
   const [activeTab, setActiveTab] = useState<Tab>('active');
   const [search, setSearch] = useState('');
@@ -60,7 +61,7 @@ export default function ApplicationsPage() {
           type="search"
           value={search}
           onChange={e => setSearch(e.target.value)}
-          placeholder="Search by service name or reference number…"
+          placeholder={trx('Search by service name or reference number…', language)}
           className="w-full pl-9 pr-10 py-2.5 rounded-xl border border-slate-200 bg-white text-sm text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-gov-600"
           aria-label="Search applications"
         />
@@ -91,7 +92,7 @@ export default function ApplicationsPage() {
                 : 'text-slate-600 hover:text-slate-900'
             )}
           >
-            {tab.label}
+            {trx(tab.label, language)}
             {lists[tab.id].length > 0 && (
               <span
                 className={cn(
@@ -122,13 +123,13 @@ export default function ApplicationsPage() {
         ) : !user ? (
           <div className="text-center py-16 bg-white rounded-xl border border-slate-200">
             <FileText size={28} className="text-slate-400 mx-auto mb-3" />
-            <p className="font-semibold text-slate-700 mb-1">Sign in to view your applications</p>
-            <p className="text-sm text-slate-500 mb-6">Your submitted applications will appear here.</p>
+            <p className="font-semibold text-slate-700 mb-1">{trx('Sign in to view your applications', language)}</p>
+            <p className="text-sm text-slate-500 mb-6">{trx('Your submitted applications will appear here.', language)}</p>
             <Link
               href="/login"
               className="inline-flex items-center gap-2 px-5 py-2.5 bg-navy-800 text-white rounded-xl font-semibold text-sm hover:bg-navy-900 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-navy-700 focus-visible:ring-offset-2"
             >
-              Sign in <ArrowRight size={16} />
+              {trx('Sign in', language)} <ArrowRight size={16} />
             </Link>
           </div>
         ) : current.length === 0 ? (
@@ -138,24 +139,24 @@ export default function ApplicationsPage() {
             </div>
             <p className="font-semibold text-slate-700 mb-1">
               {q
-                ? 'No applications match your search'
-                : activeTab === 'active' ? 'No active applications'
-                : activeTab === 'drafts' ? 'No saved drafts'
-                : 'No completed applications yet'}
+                ? trx('No applications match your search', language)
+                : activeTab === 'active' ? trx('No active applications', language)
+                : activeTab === 'drafts' ? trx('No saved drafts', language)
+                : trx('No completed applications yet', language)}
             </p>
             <p className="text-sm text-slate-500 mb-6">
               {q
-                ? 'Try a different search term.'
+                ? trx('Try a different search term.', language)
                 : activeTab === 'drafts'
-                ? 'Start an application and save it to continue later.'
-                : 'Browse services to start a new application.'}
+                ? trx('Start an application and save it to continue later.', language)
+                : trx('Browse services to start a new application.', language)}
             </p>
             {!q && (
               <Link
                 href="/services"
                 className="inline-flex items-center gap-2 px-5 py-2.5 bg-navy-800 text-white rounded-xl font-semibold text-sm hover:bg-navy-900 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-navy-700 focus-visible:ring-offset-2"
               >
-                Browse Services <ArrowRight size={16} />
+                {trx('Browse Services', language)} <ArrowRight size={16} />
               </Link>
             )}
           </div>

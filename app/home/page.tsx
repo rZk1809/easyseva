@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useApp } from '@/context/AppContext';
-import { tr } from '@/lib/translations';
+import { tr, trx } from '@/lib/translations';
 import { serviceCategories } from '@/lib/mockData';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { ServiceCategoryCard } from '@/components/features/ServiceCard';
@@ -41,7 +41,7 @@ export default function HomePage() {
           <div>
             <div className="flex items-center gap-2 text-sm text-slate-500 font-medium mb-1">
               <MapPin size={14} aria-hidden="true" />
-              Tamil Nadu
+              {trx('Tamil Nadu', language)}
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">
               {tr('home.greeting', language)}
@@ -64,7 +64,7 @@ export default function HomePage() {
         aria-label="Search for a service — What do you need help with?"
       >
         <Search size={20} className="text-slate-400 shrink-0" aria-hidden="true" />
-        <span className="text-slate-500 text-base">What do you need help with?</span>
+        <span className="text-slate-500 text-base">{trx('What do you need help with?', language)}</span>
       </Link>
 
       {/* Active application alerts */}
@@ -72,14 +72,14 @@ export default function HomePage() {
         <div key={app.id} className="mb-4 bg-orange-50 border border-orange-300 rounded-xl p-4 flex items-start gap-3">
           <div className="w-2 h-2 mt-2 rounded-full bg-orange-500 shrink-0 animate-pulse" aria-hidden="true" />
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-semibold text-orange-900">Action needed: {app.serviceName}</p>
-            <p className="text-sm text-orange-700 mt-0.5">Please check your application — a response is required.</p>
+            <p className="text-sm font-semibold text-orange-900">{trx('Action needed:', language)} {app.serviceName}</p>
+            <p className="text-sm text-orange-700 mt-0.5">{trx('Please check your application — a response is required.', language)}</p>
           </div>
           <Link
             href={`/track?ref=${app.referenceNumber}`}
             className="text-sm font-semibold text-orange-700 hover:text-orange-900 shrink-0 flex items-center gap-1"
           >
-            View <ArrowRight size={14} />
+            {trx('View', language)} <ArrowRight size={14} />
           </Link>
         </div>
       ))}
@@ -88,14 +88,14 @@ export default function HomePage() {
       {draftApps.slice(0, 1).map(app => (
         <div key={app.id} className="mb-6 bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-start gap-3">
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-semibold text-amber-900">Continue your draft: {app.serviceName}</p>
-            <p className="text-sm text-amber-700 mt-0.5">You saved {app.progress}% of your application. Continue where you left off.</p>
+            <p className="text-sm font-semibold text-amber-900">{trx('Continue your draft:', language)} {app.serviceName}</p>
+            <p className="text-sm text-amber-700 mt-0.5">{trx('You saved', language)} {app.progress}% {trx('of your application. Continue where you left off.', language)}</p>
           </div>
           <Link
             href={`/apply/${app.serviceId}/form`}
             className="shrink-0 bg-amber-200 hover:bg-amber-300 text-amber-900 text-sm font-semibold px-3 py-1.5 rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-600"
           >
-            Continue
+            {trx('Continue', language)}
           </Link>
         </div>
       ))}
@@ -126,11 +126,11 @@ export default function HomePage() {
               <HelpCircle size={24} className="text-teal-600" aria-hidden="true" />
             </div>
             <div>
-              <h3 className="font-bold text-slate-700 group-hover:text-teal-800 transition-colors">Help Me Find a Service</h3>
-              <p className="text-sm text-slate-500 mt-1">Not sure what you need? Answer a few questions.</p>
+              <h3 className="font-bold text-slate-700 group-hover:text-teal-800 transition-colors">{trx('Help Me Find a Service', language)}</h3>
+              <p className="text-sm text-slate-500 mt-1">{trx('Not sure what you need? Answer a few questions.', language)}</p>
             </div>
             <span className="text-sm font-semibold text-teal-600 flex items-center gap-1">
-              Get Help <ArrowRight size={14} />
+              {trx('Get Help', language)} <ArrowRight size={14} />
             </span>
           </Link>
         </div>
@@ -146,7 +146,7 @@ export default function HomePage() {
             href="/applications"
             className="text-sm font-semibold text-gov-600 hover:text-gov-800 flex items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-gov-600 rounded"
           >
-            View all <ArrowRight size={14} aria-hidden="true" />
+            {trx('View all', language)} <ArrowRight size={14} aria-hidden="true" />
           </Link>
         </div>
 
@@ -156,7 +156,7 @@ export default function HomePage() {
               <FileText size={28} className="text-slate-400" aria-hidden="true" />
             </div>
             <p className="font-semibold text-slate-700 mb-1">{tr('home.noApps', language)}</p>
-            <p className="text-sm text-slate-500 mb-4">Choose a service above to start your first application.</p>
+            <p className="text-sm text-slate-500 mb-4">{trx('Choose a service above to start your first application.', language)}</p>
             <Link
               href="/services"
               className="inline-flex items-center gap-1.5 text-sm font-semibold text-gov-600 hover:text-gov-800"

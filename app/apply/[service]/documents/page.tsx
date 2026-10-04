@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/Button';
 import { Alert } from '@/components/ui/Alert';
 import { ProgressBar } from '@/components/ui/Progress';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { trx } from '@/lib/translations';
 
 export default function DocumentsPage() {
   const params = useParams();
@@ -39,14 +40,14 @@ export default function DocumentsPage() {
       <ProgressBar
         value={progress}
         showPercent
-        label={`${uploadedRequired.length} of ${required.length} required documents ready`}
+        label={`${uploadedRequired.length} ${trx('of', language)} ${required.length} ${trx('required documents ready', language)}`}
         color={allRequiredUploaded ? 'success' : 'primary'}
         className="mb-6"
       />
 
       {allRequiredUploaded && (
         <Alert variant="success" className="mb-6" role="status">
-          <strong>All required documents are ready.</strong> You can now continue to the application form.
+          <strong>{trx('All required documents are ready.', language)}</strong> {trx('You can now continue to the application form.', language)}
         </Alert>
       )}
 
@@ -64,7 +65,7 @@ export default function DocumentsPage() {
           iconRight={<ArrowRight size={18} />}
           onClick={() => router.push(`/apply/${serviceId}/form`)}
         >
-          {allRequiredUploaded ? 'Continue to Application Form' : 'Continue (upload documents later)'}
+          {allRequiredUploaded ? trx('Continue to Application Form', language) : trx('Continue (upload documents later)', language)}
         </Button>
         <Button
           variant="ghost"
@@ -72,12 +73,12 @@ export default function DocumentsPage() {
           fullWidth
           onClick={() => router.push('/home')}
         >
-          Save and Finish Later
+          {trx('Save and Finish Later', language)}
         </Button>
       </div>
 
       <p className="text-xs text-slate-400 text-center mt-4">
-        Your progress is automatically saved. You can return to this step anytime.
+        {trx('Your progress is automatically saved. You can return to this step anytime.', language)}
       </p>
     </PageLayout>
   );
